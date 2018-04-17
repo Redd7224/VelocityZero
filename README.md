@@ -10,15 +10,17 @@ https://digitalerr0r.wordpress.com/2014/05/02/setting-up-a-directx-11-project-in
 
 When things start getting into full swing, we'll be coming up with more standards on how everyting is done.
 
+Trello Board:
+https://trello.com/b/5IhTempJ/velocityzero
 
-Current Ideals
-Goals
+Current Ideals:
+Goals:
 	self-published
 	release
 	working released version-iterative
 		
 
-Requirements
+Requirements:
 	isometric
 	2D - <Maybe 2D/3D>
 	C++/DirectX11
