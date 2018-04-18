@@ -18,6 +18,14 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\core\main.cpp" />
+    <ClCompile Include="src\core\window.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\core\main.h" />
+    <ClInclude Include="src\core\window.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{231E5750-D12B-4890-B774-1883107123A4}</ProjectGuid>
     <RootNamespace>Engine</RootNamespace>
@@ -118,8 +126,6 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

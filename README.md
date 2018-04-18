@@ -25,3 +25,7 @@ Requirements:
 	2D - <Maybe 2D/3D>
 	C++/DirectX11
 	
+    
+Tutorials:
+    DX11:
+        Might be decent entry tut https://www.youtube.com/watch?v=BGcPNiPQrig
