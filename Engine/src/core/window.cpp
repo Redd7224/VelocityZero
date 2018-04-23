@@ -1,4 +1,3 @@
-#include <Windows.h>
 #include "window.h"
 
 // handle is window specific handler; msg is event message bring processed. wparam and lparam are event arguments.
@@ -27,9 +26,14 @@ Window::Window(int width, int height){
 
 
 	//Creates Window
-	CreateWindow("VelocityZero", //Name of Window Style class. Using Custom class
+	m_handle = CreateWindow("VelocityZero", //Name of Window Style class. Using Custom class
 		"Velocity Zero", //Window title
 		WS_POPUP | WS_CAPTION | WS_SYSMENU |WS_VISIBLE, //Window Styles. WS_POPUP = window mode? WS_CAPTION = title bar; WS_SYSMENU = close button?
 		100, 100, width, height, //Default position and size
 		nullptr, nullptr, nullptr, nullptr);
+}
+
+HWND Window::getHandle()
+{
+	return m_handle;
 }

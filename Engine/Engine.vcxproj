@@ -20,11 +20,29 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\core\main.cpp" />
+    <ClCompile Include="src\core\renderer.cpp" />
+    <ClCompile Include="src\core\triangle.cpp" />
     <ClCompile Include="src\core\window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\core\main.h" />
+    <ClInclude Include="src\core\renderer.h" />
+    <ClInclude Include="src\core\triangle.h" />
     <ClInclude Include="src\core\window.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="src\core\trianglePixelShader.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <VariableName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">g_trianglepsshader</VariableName>
+      <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">trianglePixelShader.h</HeaderFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
+    <FxCompile Include="src\core\triangleVertexShader.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(Filename).cso</ObjectFileOutput>
+      <VariableName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">g_trianglevsshader</VariableName>
+      <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">triangleVertexShader.h</HeaderFileOutput>
+    </FxCompile>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{231E5750-D12B-4890-B774-1883107123A4}</ProjectGuid>
@@ -92,6 +110,9 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
     </ClCompile>
+    <Link>
+      <AdditionalDependencies>d3d11.lib;dxgi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
