@@ -45,14 +45,15 @@ void Triangle::draw(Renderer& renderer) {
 
 	// Draw calls should be looped(batched) no need to loop shaders.
 	// Draw
-	deviceContext->Draw(3, 0);
+	deviceContext->Draw(4, 0);
 }
 
 void Triangle::createMesh(Renderer& renderer) {
 	Vertex vertices[] = {
 		{ -1, -1, 1, 0, 0 },
-		{ 0, 1, 0, 1, 0 },
-		{ 1, -1, 0, 0, 1 }
+		{ -1, 0 , 0, 0, 0 },
+		{ 0, -1, 0, 1, 0 },
+		{ 0, 0, 0, 0, 1 }
 	};
 
 	auto vertexBufferDesc = CD3D11_BUFFER_DESC(sizeof(vertices), D3D11_BIND_VERTEX_BUFFER);
