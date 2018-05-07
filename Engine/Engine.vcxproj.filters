@@ -36,6 +36,12 @@
     <ClCompile Include="src\core\SpriteFont.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\core\vertexPositionColorTexture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\bennySpriteBatch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\core\main.h">
@@ -62,12 +68,30 @@
     <ClInclude Include="src\core\SpriteFont.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\core\SpriteBatch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\vertexPositionColorTexture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\bennySpriteBatch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\bennyVertexPosColTex.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="src\core\triangleVertexShader.hlsl">
       <Filter>Source Files</Filter>
     </FxCompile>
     <FxCompile Include="src\core\trianglePixelShader.hlsl">
+      <Filter>Source Files</Filter>
+    </FxCompile>
+    <FxCompile Include="SpriteBatch.hlsl">
+      <Filter>Source Files</Filter>
+    </FxCompile>
+    <FxCompile Include="bennySpriteBatch.hlsl">
       <Filter>Source Files</Filter>
     </FxCompile>
   </ItemGroup>
