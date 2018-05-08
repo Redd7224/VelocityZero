@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\core\bennySpriteBatch.cpp" />
+    <ClCompile Include="src\core\game.cpp" />
     <ClCompile Include="src\core\main.cpp" />
     <ClCompile Include="src\core\Rect.cpp" />
     <ClCompile Include="src\core\renderer.cpp" />
@@ -32,6 +33,7 @@
     <ClInclude Include="src\core\bennySpriteBatch.h" />
     <ClInclude Include="src\core\bennyVertexPosColTex.h" />
     <ClInclude Include="src\core\d3dinclude.h" />
+    <ClInclude Include="src\core\game.h" />
     <ClInclude Include="src\core\main.h" />
     <ClInclude Include="src\core\pch.h" />
     <ClInclude Include="src\core\Rect.h" />

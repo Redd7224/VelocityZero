@@ -3,6 +3,7 @@
 #include "window.h"
 #include "renderer.h"
 #include "pch.h"
+#include "game.h"
 #include <wrl\client.h>
 #include <DirectXHelpers.h>
 #include <SpriteBatch.h>
@@ -15,25 +16,21 @@ int CALLBACK WinMain(HINSTANCE appInstance, HINSTANCE prevInstance, LPSTR cmdLin
 	Window window(800, 600);
 	Renderer renderer(window);
 	MSG msg = { 0 }; //Window Message
-
-	//Create Temp Triangle class
-
-
-	ID3D11ShaderResourceView* m_pTexture;
-	
-	//Dirt.jpg
-	D3DX11CreateShaderResourceViewFromFile(renderer.getDevice(), TEXT("Dirt.jpg"), 
-		nullptr, nullptr, &m_pTexture, nullptr);
-
-	//DXTOOLKIT
+	// TODO Create init function
+	// DXTOOLKIT
 	std::unique_ptr<DirectX::SpriteBatch> m_spriteBatch = std::make_unique<DirectX::SpriteBatch>(renderer.getDeviceContext());
 
+
+	// TODO add method to create textures?
 	ComPtr<ID3D11ShaderResourceView> m_texture;
+	
 	CreateWICTextureFromFile(renderer.getDevice(), L"Dirt.jpg", nullptr,m_texture.ReleaseAndGetAddressOf());
+	Game game = Game();
+	
 	int x = 0;
 	int y = 0;
 	while (true) {
-		//Handle Program Exit
+		// Handle Program Exit
 		if (PeekMessage(&msg, 0, 0, 0, PM_REMOVE)) {
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
@@ -44,7 +41,8 @@ int CALLBACK WinMain(HINSTANCE appInstance, HINSTANCE prevInstance, LPSTR cmdLin
 		// Main loop
 		// Get Input
 		//	
-		// Game Engine Update pass into game Update
+		// Game Engine Update pass input get out things to draww
+		game.Update();
 		//
 		// Rendering Engine Update
 		
