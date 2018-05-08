@@ -24,7 +24,7 @@ int CALLBACK WinMain(HINSTANCE appInstance, HINSTANCE prevInstance, LPSTR cmdLin
 	// TODO add method to create textures?
 	ComPtr<ID3D11ShaderResourceView> m_texture;
 	
-	CreateWICTextureFromFile(renderer.getDevice(), L"Dirt.jpg", nullptr,m_texture.ReleaseAndGetAddressOf());
+	CreateWICTextureFromFile(renderer.getDevice(), L"./art/PH_ground.png", nullptr,m_texture.ReleaseAndGetAddressOf());
 	Game game = Game();
 	
 	int x = 0;
@@ -49,7 +49,7 @@ int CALLBACK WinMain(HINSTANCE appInstance, HINSTANCE prevInstance, LPSTR cmdLin
 		renderer.beginFrame();
 		//User renderer to render things on frame
 		m_spriteBatch->Begin();
-		m_spriteBatch->Draw(m_texture.Get(), XMFLOAT2(100, 100), nullptr, Colors::White, 1.0f,  XMFLOAT2(0,0));
+		m_spriteBatch->Draw(m_texture.Get(), XMFLOAT2(100, 100), nullptr, Colors::White, 0.0f,  XMFLOAT2(0,0));
 
 		m_spriteBatch->End();
 
