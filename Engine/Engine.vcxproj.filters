@@ -36,9 +36,6 @@
     <ClCompile Include="src\core\SpriteFont.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\core\vertexPositionColorTexture.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\core\bennySpriteBatch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -80,6 +77,9 @@
     <ClInclude Include="src\core\bennyVertexPosColTex.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\core\pch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="src\core\triangleVertexShader.hlsl">
@@ -94,5 +94,8 @@
     <FxCompile Include="bennySpriteBatch.hlsl">
       <Filter>Source Files</Filter>
     </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>

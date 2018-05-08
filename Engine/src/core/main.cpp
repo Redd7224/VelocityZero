@@ -2,29 +2,36 @@
 #include "main.h"
 #include "window.h"
 #include "renderer.h"
-#include "triangle.h"
-#include "SpriteBatch.h"
-#include "bennySpriteBatch.h"
+#include "pch.h"
+#include <wrl\client.h>
+#include <DirectXHelpers.h>
+#include <SpriteBatch.h>
 
 
+
+using Microsoft::WRL::ComPtr;
+using namespace DirectX;
 int CALLBACK WinMain(HINSTANCE appInstance, HINSTANCE prevInstance, LPSTR cmdLine, int cmdCount) {
 	Window window(800, 600);
 	Renderer renderer(window);
 	MSG msg = { 0 }; //Window Message
 
 	//Create Temp Triangle class
-	Triangle triangle(renderer);
+
 
 	ID3D11ShaderResourceView* m_pTexture;
 	
-	SpriteBatch sp;
-	sp.Init(renderer.getDevice(), renderer.getDeviceContext());
-
-	BennySpriteBatch bsb(renderer.getDevice(), renderer.getDeviceContext());
 	//Dirt.jpg
 	D3DX11CreateShaderResourceViewFromFile(renderer.getDevice(), TEXT("Dirt.jpg"), 
 		nullptr, nullptr, &m_pTexture, nullptr);
 
+	//DXTOOLKIT
+	std::unique_ptr<DirectX::SpriteBatch> m_spriteBatch = std::make_unique<DirectX::SpriteBatch>(renderer.getDeviceContext());
+
+	ComPtr<ID3D11ShaderResourceView> m_texture;
+	CreateWICTextureFromFile(renderer.getDevice(), L"Dirt.jpg", nullptr,m_texture.ReleaseAndGetAddressOf());
+	int x = 0;
+	int y = 0;
 	while (true) {
 		//Handle Program Exit
 		if (PeekMessage(&msg, 0, 0, 0, PM_REMOVE)) {
@@ -35,16 +42,19 @@ int CALLBACK WinMain(HINSTANCE appInstance, HINSTANCE prevInstance, LPSTR cmdLin
 		}
 
 		// Main loop
+		// Get Input
 		//	
-		// Game Engine Update
+		// Game Engine Update pass into game Update
+		//
 		// Rendering Engine Update
+		
 		renderer.beginFrame();
 		//User renderer to render things on frame
-		//triangle.draw(renderer);
-		bsb.Begin();
-		bsb.Draw(m_pTexture, XMFLOAT2(200, 200),.1f);
-		bsb.Draw(m_pTexture, XMFLOAT2(400, 500),.1f);
-		bsb.End();
+		m_spriteBatch->Begin();
+		m_spriteBatch->Draw(m_texture.Get(), XMFLOAT2(100, 100), nullptr, Colors::White, 1.0f,  XMFLOAT2(0,0));
+
+		m_spriteBatch->End();
+
 
 		//End rendering and display
 		renderer.endFrame(); 
