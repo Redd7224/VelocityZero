@@ -19,61 +19,19 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\core\bennySpriteBatch.cpp" />
     <ClCompile Include="src\core\game.cpp" />
     <ClCompile Include="src\core\main.cpp" />
-    <ClCompile Include="src\core\Rect.cpp" />
     <ClCompile Include="src\core\renderer.cpp" />
-    <ClCompile Include="src\core\SpriteBatch.cpp" />
-    <ClCompile Include="src\core\SpriteFont.cpp" />
-    <ClCompile Include="src\core\triangle.cpp" />
     <ClCompile Include="src\core\window.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\core\bennySpriteBatch.h" />
-    <ClInclude Include="src\core\bennyVertexPosColTex.h" />
-    <ClInclude Include="src\core\d3dinclude.h" />
     <ClInclude Include="src\core\game.h" />
     <ClInclude Include="src\core\main.h" />
     <ClInclude Include="src\core\pch.h" />
-    <ClInclude Include="src\core\Rect.h" />
     <ClInclude Include="src\core\renderer.h" />
-    <ClInclude Include="src\core\SpriteBatch.h" />
-    <ClInclude Include="src\core\SpriteBatch_Vertex.h" />
-    <ClInclude Include="src\core\SpriteFont.h" />
-    <ClInclude Include="src\core\triangle.h" />
-    <ClInclude Include="src\core\vertexPositionColorTexture.h" />
+    <ClInclude Include="src\core\spriteInfo.h" />
+    <ClInclude Include="src\core\StepTimer.h" />
     <ClInclude Include="src\core\window.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <FxCompile Include="bennySpriteBatch.hlsl">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-    </FxCompile>
-    <FxCompile Include="SpriteBatch.hlsl">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-    </FxCompile>
-    <FxCompile Include="src\core\trianglePixelShader.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
-      <VariableName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">g_trianglepsshader</VariableName>
-      <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">trianglePixelShader.h</HeaderFileOutput>
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(Filename).cso</ObjectFileOutput>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4.0_level_9_3</ShaderModel>
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(Filename).cso</ObjectFileOutput>
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(Filename).cso</ObjectFileOutput>
-    </FxCompile>
-    <FxCompile Include="src\core\triangleVertexShader.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(Filename).cso</ObjectFileOutput>
-      <VariableName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">g_trianglevsshader</VariableName>
-      <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">triangleVertexShader.h</HeaderFileOutput>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4.0_level_9_3</ShaderModel>
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(Filename).cso</ObjectFileOutput>
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(Filename).cso</ObjectFileOutput>
-    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

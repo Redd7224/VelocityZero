@@ -4,14 +4,19 @@
 #include "renderer.h"
 #include "pch.h"
 #include "game.h"
+#include "spriteInfo.h"
+#include "StepTimer.h"
 #include <wrl\client.h>
 #include <DirectXHelpers.h>
 #include <SpriteBatch.h>
-
-
+#include <map>
+#include <string>
 
 using Microsoft::WRL::ComPtr;
 using namespace DirectX;
+//Map may not be as quick as just passing around and holding onto pointers
+std::map<std::string, ComPtr<ID3D11ShaderResourceView>> textureMap;
+
 int CALLBACK WinMain(HINSTANCE appInstance, HINSTANCE prevInstance, LPSTR cmdLine, int cmdCount) {
 	Window window(800, 600);
 	Renderer renderer(window);
@@ -20,11 +25,16 @@ int CALLBACK WinMain(HINSTANCE appInstance, HINSTANCE prevInstance, LPSTR cmdLin
 	// DXTOOLKIT
 	std::unique_ptr<DirectX::SpriteBatch> m_spriteBatch = std::make_unique<DirectX::SpriteBatch>(renderer.getDeviceContext());
 
+	//TODO Make sure this timer works... Microsoft has it in most of their base app projects so I think we are good
+	DX::StepTimer s_timer;
+	
+	
 
 	// TODO add method to create textures?
-	ComPtr<ID3D11ShaderResourceView> m_texture;
+	ComPtr<ID3D11ShaderResourceView> texture;
 	
-	CreateWICTextureFromFile(renderer.getDevice(), L"./art/PH_ground.png", nullptr,m_texture.ReleaseAndGetAddressOf());
+	CreateWICTextureFromFile(renderer.getDevice(), L"./art/PH_ground.png", nullptr, texture.ReleaseAndGetAddressOf());
+	textureMap["PH_ground.png"] = texture;
 	Game game = Game();
 	
 	int x = 0;
@@ -42,15 +52,22 @@ int CALLBACK WinMain(HINSTANCE appInstance, HINSTANCE prevInstance, LPSTR cmdLin
 		// Get Input
 		//	
 		// Game Engine Update pass input get out things to draww
-		game.Update();
+		s_timer.Tick([&]()
+		{
+			float delta = float(s_timer.GetElapsedSeconds());
+			game.Update(delta);
+		});
+		
 		//
 		// Rendering Engine Update
 		
 		renderer.beginFrame();
 		//User renderer to render things on frame
 		m_spriteBatch->Begin();
-		m_spriteBatch->Draw(m_texture.Get(), XMFLOAT2(100, 100), nullptr, Colors::White, 0.0f,  XMFLOAT2(0,0));
-
+		for (auto &spriteInfo : game.m_spritesToDraw) // access by reference to avoid copying
+		{
+			m_spriteBatch->Draw(textureMap[spriteInfo.textureName].Get(), spriteInfo.position, nullptr, Colors::White, spriteInfo.rotation, XMFLOAT2(0, 0));
+		}
 		m_spriteBatch->End();
 
 
