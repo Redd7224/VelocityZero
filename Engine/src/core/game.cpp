@@ -1,12 +1,17 @@
 #include "game.h"
 
-Game::Game() {}
+Game::Game(DirectX::XMFLOAT2 targetResolution) {
+	m_pCamera = new Camera(targetResolution);
+	GenerateDummyLevel();
+}
 Game::~Game() {}
 void Game::Update(float deltaTime) {
 	int x = 1;
 	//we may not want to clear . but may be easest for now. 
 	m_spritesToDraw.clear();
-	GenerateDummyLevel();
+	m_spritesToDraw.insert(m_spritesToDraw.end(), m_currentLevelSpriteInfo.begin(), m_currentLevelSpriteInfo.end());
+	
+	m_pCamera->FilterSpritesForView(m_spritesToDraw);
 }
 
 void Game::GenerateDummyLevel() {
@@ -30,7 +35,7 @@ void Game::GenerateDummyLevel() {
 			SpriteInfo si;
 			si.textureName = "PH_ground.png";
 			si.position = DirectX::XMFLOAT2(x, y );
-			m_spritesToDraw.push_back(si);
+			m_currentLevelSpriteInfo.push_back(si);
 		}
 	}
 }

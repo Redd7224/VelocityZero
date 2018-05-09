@@ -35,7 +35,7 @@ int CALLBACK WinMain(HINSTANCE appInstance, HINSTANCE prevInstance, LPSTR cmdLin
 	
 	CreateWICTextureFromFile(renderer.getDevice(), L"./art/PH_ground.png", nullptr, texture.ReleaseAndGetAddressOf());
 	textureMap["PH_ground.png"] = texture;
-	Game game = Game();
+	Game game = Game(XMFLOAT2(800,600));
 	
 	int x = 0;
 	int y = 0;
