@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="src\core\camera.cpp" />
     <ClCompile Include="src\core\game.cpp" />
+    <ClCompile Include="src\core\inputHandler.cpp" />
     <ClCompile Include="src\core\main.cpp" />
     <ClCompile Include="src\core\renderer.cpp" />
     <ClCompile Include="src\core\window.cpp" />
@@ -28,6 +29,8 @@
   <ItemGroup>
     <ClInclude Include="src\core\camera.h" />
     <ClInclude Include="src\core\game.h" />
+    <ClInclude Include="src\core\inputHandler.h" />
+    <ClInclude Include="src\core\inputData.h" />
     <ClInclude Include="src\core\main.h" />
     <ClInclude Include="src\core\pch.h" />
     <ClInclude Include="src\core\renderer.h" />

@@ -8,13 +8,11 @@ Camera::Camera(DirectX::XMFLOAT2 targetResolution) {
 Camera::~Camera() {}
 
 //TODO handle Camera movement
-void Camera::Move(DirectX::XMFLOAT2, float delta) {
-	/*
-	m_viewport.x += 15 * delta;
-	m_viewport.z += 15 * delta;
-	m_viewport.y += 15 * delta;
-	m_viewport.w += 15 * delta;
-	*/
+void Camera::Move(DirectX::XMFLOAT2 vel, float delta) {
+	m_viewport.x += vel.x * delta;
+	m_viewport.z += vel.x * delta;
+	m_viewport.y += vel.y * delta;
+	m_viewport.w += vel.y * delta;
 }
 void Camera::FilterSpritesForView(std::vector<SpriteInfo> &spritesToDraw) {
 	if (!spritesToDraw.empty()) {

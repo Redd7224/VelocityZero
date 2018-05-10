@@ -5,6 +5,8 @@
 #include "pch.h"
 #include "game.h"
 #include "spriteInfo.h"
+#include "inputHandler.h"
+#include "inputData.h"
 #include "StepTimer.h"
 #include <wrl\client.h>
 #include <DirectXHelpers.h>
@@ -14,21 +16,30 @@
 
 using Microsoft::WRL::ComPtr;
 using namespace DirectX;
+
+//These vairables probably dont belong here
 //Map may not be as quick as just passing around and holding onto pointers
 std::map<std::string, ComPtr<ID3D11ShaderResourceView>> textureMap;
+// keyboard and mouse are singletons. 
+std::unique_ptr<DirectX::Keyboard> m_keyboard;
+std::unique_ptr<DirectX::Mouse> m_mouse;
 
 int CALLBACK WinMain(HINSTANCE appInstance, HINSTANCE prevInstance, LPSTR cmdLine, int cmdCount) {
 	Window window(800, 600);
 	Renderer renderer(window);
 	MSG msg = { 0 }; //Window Message
 	// TODO Create init function
+	m_keyboard = std::make_unique<Keyboard>();
+	m_mouse = std::make_unique<Mouse>();
+	m_mouse->SetWindow(window.getHandle());
+	
 	// DXTOOLKIT
 	std::unique_ptr<DirectX::SpriteBatch> m_spriteBatch = std::make_unique<DirectX::SpriteBatch>(renderer.getDeviceContext());
 
 	//TODO Make sure this timer works... Microsoft has it in most of their base app projects so I think we are good
 	DX::StepTimer s_timer;
 	
-	
+	InputHandler* inputHander = new InputHandler(m_keyboard.get(),m_mouse.get());
 
 	// TODO add method to create textures?
 	ComPtr<ID3D11ShaderResourceView> texture;
@@ -41,6 +52,10 @@ int CALLBACK WinMain(HINSTANCE appInstance, HINSTANCE prevInstance, LPSTR cmdLin
 	int y = 0;
 	while (true) {
 		// Handle Program Exit
+		auto kb = m_keyboard.get()->GetState();
+		if (kb.Escape) {
+			break;
+		}
 		if (PeekMessage(&msg, 0, 0, 0, PM_REMOVE)) {
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
@@ -55,7 +70,8 @@ int CALLBACK WinMain(HINSTANCE appInstance, HINSTANCE prevInstance, LPSTR cmdLin
 		s_timer.Tick([&]()
 		{
 			float delta = float(s_timer.GetElapsedSeconds());
-			game.Update(delta);
+			inputHander->Update();
+			game.Update(delta, inputHander->m_pInputData);
 		});
 		
 		//

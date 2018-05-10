@@ -8,7 +8,7 @@ class Camera
 public:
 	Camera(DirectX::XMFLOAT2 targetResolution);
 	~Camera();
-	void Move(DirectX::XMFLOAT2, float delta);
+	void Move(DirectX::XMFLOAT2 vel, float delta);
 	void FilterSpritesForView(std::vector<SpriteInfo> &spritesToDraw);
 private:
 	DirectX::XMFLOAT4 m_viewport;

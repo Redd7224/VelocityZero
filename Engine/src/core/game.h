@@ -3,12 +3,14 @@
 #include <DirectXMath.h>
 #include "spriteInfo.h"
 #include "camera.h"
+#include "inputData.h"
+
 class Game
 {
 public:
 	Game(DirectX::XMFLOAT2 targetResolution);
 	~Game();
-	void Update(float deltaTime);
+	void Update(float deltaTime,InputData* inputData);
 	std::vector<SpriteInfo> m_spritesToDraw;
 private:
 	void GenerateDummyLevel();

@@ -5,12 +5,12 @@ Game::Game(DirectX::XMFLOAT2 targetResolution) {
 	GenerateDummyLevel();
 }
 Game::~Game() {}
-void Game::Update(float deltaTime) {
+void Game::Update(float deltaTime, InputData* inputData) {
 	int x = 1;
 	//we may not want to clear . but may be easest for now. 
 	m_spritesToDraw.clear();
 	m_spritesToDraw.insert(m_spritesToDraw.end(), m_currentLevelSpriteInfo.begin(), m_currentLevelSpriteInfo.end());
-	
+	m_pCamera->Move(DirectX::XMFLOAT2(30 * inputData->xAxis, 30 * inputData->yAxis),deltaTime);
 	m_pCamera->FilterSpritesForView(m_spritesToDraw);
 }
 
