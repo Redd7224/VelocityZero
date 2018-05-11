@@ -15,6 +15,9 @@ Player::Player() {
 Player::~Player() {}
 void Player::Move(InputData* inputData, float deltaTime) {
 	
+	//If we move Diagionally we need to devide y movement by 2 to keep in perspective
+	int yDiagMod = 1;
+
 	//Total hack? Maybe should be done somewhere else 
 	//Bitmask for 8 directions
 	// 1 = up
@@ -51,18 +54,22 @@ void Player::Move(InputData* inputData, float deltaTime) {
 		m_SpriteInfo.spriteIdx.x = 6;
 		break;
 	case 5:
+		yDiagMod = 2;
 		m_SpriteInfo.spriteIdx.x = 7;
 		break;
 	case 6:
+		yDiagMod = 2;
 		m_SpriteInfo.spriteIdx.x = 5;
 		break;
 	case 8:
 		m_SpriteInfo.spriteIdx.x = 2;
 		break;
 	case 9:
+		yDiagMod = 2;
 		m_SpriteInfo.spriteIdx.x = 1;
 		break;
 	case 10:
+		yDiagMod = 2;
 		m_SpriteInfo.spriteIdx.x = 3;
 		break;
 	default:
@@ -73,7 +80,7 @@ void Player::Move(InputData* inputData, float deltaTime) {
 	m_SpriteInfo.CalcSourceRECT();
 
 	m_position.x += -1 * (inputData->xAxis * moveSpeed) * deltaTime;
-	m_position.y +=  -1 * (inputData->yAxis * moveSpeed) * deltaTime;
+	m_position.y +=  -1 * (inputData->yAxis * moveSpeed /yDiagMod) * deltaTime;
 	m_SpriteInfo.position.x = m_position.x;
 	m_SpriteInfo.position.y = m_position.y;
 

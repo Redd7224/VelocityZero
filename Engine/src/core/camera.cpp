@@ -52,6 +52,9 @@ void Camera::FilterSpritesForView(std::vector<SpriteInfo> &spritesToDraw) {
 	}
 }
 void Camera::TranslateSpriteToScreenPosition(SpriteInfo &spriteInfo) {
+	
 	spriteInfo.position.x += -1 * m_viewport.x;
 	spriteInfo.position.y += -1 * m_viewport.y;
+	
+
 }
