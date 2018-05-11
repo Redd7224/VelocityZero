@@ -12,5 +12,6 @@ public:
 	SpriteInfo m_SpriteInfo;
 
 private:
-	float moveSpeed = 60.0f;
+	float moveSpeed = 100.0f;
+	void UpdateSpriteIdxByDirection(int direction);
 };

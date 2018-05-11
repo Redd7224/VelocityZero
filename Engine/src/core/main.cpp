@@ -22,7 +22,7 @@ using namespace DirectX;
 std::map<std::string, ComPtr<ID3D11ShaderResourceView>> textureMap;
 // keyboard and mouse are singletons. 
 std::unique_ptr<DirectX::Keyboard> m_keyboard;
-std::unique_ptr<DirectX::Mouse> m_mouse;
+//std::unique_ptr<DirectX::Mouse> m_mouse;
 
 int CALLBACK WinMain(HINSTANCE appInstance, HINSTANCE prevInstance, LPSTR cmdLine, int cmdCount) {
 	Window window(800, 600);
@@ -30,17 +30,19 @@ int CALLBACK WinMain(HINSTANCE appInstance, HINSTANCE prevInstance, LPSTR cmdLin
 	MSG msg = { 0 }; //Window Message
 	// TODO Create init function
 	m_keyboard = std::make_unique<Keyboard>();
-	m_mouse = std::make_unique<Mouse>();
-	m_mouse->SetWindow(window.getHandle());
+	//m_mouse = std::make_unique<Mouse>();
+	//m_mouse->SetWindow(window.getHandle());
 	
 	// DXTOOLKIT
 	std::unique_ptr<DirectX::SpriteBatch> m_spriteBatch = std::make_unique<DirectX::SpriteBatch>(renderer.getDeviceContext());
 
 	//TODO Make sure this timer works... Microsoft has it in most of their base app projects so I think we are good
 	DX::StepTimer s_timer;
-	
-	InputHandler* inputHander = new InputHandler(m_keyboard.get(),m_mouse.get());
-
+	//TODO decide if we want fixed update or not FIXED FPS
+	s_timer.SetFixedTimeStep(true);
+	s_timer.SetTargetElapsedSeconds(1.f / 60.f);
+	//InputHandler* inputHander = new InputHandler(m_keyboard.get(),m_mouse.get());
+	InputHandler* inputHander = new InputHandler(m_keyboard.get(), nullptr);
 	// TODO add method to create textures?
 	ComPtr<ID3D11ShaderResourceView> texture;
 	
@@ -54,10 +56,7 @@ int CALLBACK WinMain(HINSTANCE appInstance, HINSTANCE prevInstance, LPSTR cmdLin
 	int y = 0;
 	while (true) {
 		// Handle Program Exit
-		auto kb = m_keyboard.get()->GetState();
-		if (kb.Escape) {
-			break;
-		}
+
 		if (PeekMessage(&msg, 0, 0, 0, PM_REMOVE)) {
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
@@ -68,11 +67,12 @@ int CALLBACK WinMain(HINSTANCE appInstance, HINSTANCE prevInstance, LPSTR cmdLin
 		// Main loop
 		// Get Input
 		//	
-		inputHander->Update();
 
+		//inputHander->Update();
 		// Game Engine Update pass input get out things to draww
 		s_timer.Tick([&]()
 		{
+			inputHander->Update();
 			float delta = float(s_timer.GetElapsedSeconds());
 			game.Update(delta, inputHander->m_pInputData);
 		});

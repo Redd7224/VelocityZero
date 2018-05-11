@@ -14,6 +14,7 @@ public:
 	std::vector<SpriteInfo> m_spritesToDraw;
 private:
 	void GenerateDummyLevel();
+	void GenerateDummyLevel2();
 	Player* m_pPlayer;
 	std::vector<SpriteInfo> m_currentLevelSpriteInfo;
 	Camera* m_pCamera;

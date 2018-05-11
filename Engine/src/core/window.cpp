@@ -3,19 +3,21 @@
 // handle is window specific handler; msg is event message bring processed. wparam and lparam are event arguments.
 // Can or will be used to handle user input
 LRESULT CALLBACK WinProc(HWND handle, UINT msg, WPARAM wparam, LPARAM lparam) {
-	//Handle Window Destory or Close
-	if (msg == WM_DESTROY || msg == WM_CLOSE) {
-		PostQuitMessage(0);  // Windows handler to Quit application?
-		return 0;
-	}
 
 	switch (msg)
 	{
+
+	case WM_CLOSE:
+	case WM_DESTROY:
+			PostQuitMessage(0);  // Windows handler to Quit application?
+			return 0;
+			break;
+	
 	case WM_ACTIVATEAPP:
 		DirectX::Keyboard::ProcessMessage(msg, wparam, lparam);
-		DirectX::Mouse::ProcessMessage(msg, wparam, lparam);
+		//DirectX::Mouse::ProcessMessage(msg, wparam, lparam);
 		break;
-
+/*
 	case WM_INPUT:
 	case WM_MOUSEMOVE:
 	case WM_LBUTTONDOWN:
@@ -30,7 +32,7 @@ LRESULT CALLBACK WinProc(HWND handle, UINT msg, WPARAM wparam, LPARAM lparam) {
 	case WM_MOUSEHOVER:
 		DirectX::Mouse::ProcessMessage(msg, wparam, lparam);
 		break;
-
+		*/
 	case WM_KEYDOWN:
 	case WM_SYSKEYDOWN:
 	case WM_KEYUP:

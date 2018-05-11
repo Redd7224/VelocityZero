@@ -2,7 +2,7 @@
 
 Game::Game(DirectX::XMFLOAT2 targetResolution) {
 	m_pCamera = new Camera(targetResolution);
-	GenerateDummyLevel();
+	GenerateDummyLevel2();
 	m_pPlayer = new Player();
 	m_pPlayer->m_position = DirectX::XMFLOAT2(400, 300);
 }
@@ -18,7 +18,7 @@ void Game::Update(float deltaTime, InputData* inputData) {
 	m_spritesToDraw.push_back(m_pPlayer->m_SpriteInfo);
 
 	//m_pCamera->Move(DirectX::XMFLOAT2(30 * inputData->xAxis, 30 * inputData->yAxis),deltaTime);
-	m_pCamera->FollowCentered(m_pPlayer->m_position);
+	m_pCamera->FollowCentered(m_pPlayer->m_SpriteInfo.position);
 
 	//Filter sprites that are in view. This also translates them to screen pos
 	m_pCamera->FilterSpritesForView(m_spritesToDraw);
@@ -50,6 +50,31 @@ void Game::GenerateDummyLevel() {
 			si.sourceRect->top = 0;
 			si.sourceRect->left= 0;
 			si.position = DirectX::XMFLOAT2(x, y );
+			m_currentLevelSpriteInfo.push_back(si);
+		}
+	}
+}
+
+
+void Game::GenerateDummyLevel2() {
+	float startx = 400;
+	float starty = 300;
+	for (size_t j = 1; j < 10; j++)
+	{
+		for (size_t i = 1; i < 10; i++)
+		{
+			float x = startx + 32 * i;
+			float y = starty+ 32 * j;
+			float isox = x - y;
+			float isoy = (x + y) / 2;
+			SpriteInfo si;
+			si.textureName = "PH_ground.png";
+			si.sourceRect = new RECT();
+			si.sourceRect->bottom = 64;
+			si.sourceRect->right = 64;
+			si.sourceRect->top = 0;
+			si.sourceRect->left = 0;
+			si.position = DirectX::XMFLOAT2(isox, isoy);
 			m_currentLevelSpriteInfo.push_back(si);
 		}
 	}
