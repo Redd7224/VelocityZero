@@ -9,6 +9,7 @@ public:
 	Camera(DirectX::XMFLOAT2 targetResolution);
 	~Camera();
 	void Move(DirectX::XMFLOAT2 vel, float delta);
+	void FollowCentered(DirectX::XMFLOAT2 position);
 	void FilterSpritesForView(std::vector<SpriteInfo> &spritesToDraw);
 private:
 	DirectX::XMFLOAT4 m_viewport;

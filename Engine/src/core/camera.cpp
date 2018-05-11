@@ -14,6 +14,10 @@ void Camera::Move(DirectX::XMFLOAT2 vel, float delta) {
 	m_viewport.y += vel.y * delta;
 	m_viewport.w += vel.y * delta;
 }
+
+void Camera::FollowCentered(DirectX::XMFLOAT2 position) {
+	m_viewport = DirectX::XMFLOAT4(position.x - (m_targetResolution.x /2), position.y - (m_targetResolution.y / 2), position.x + (m_targetResolution.x / 2), position.y + (m_targetResolution.y / 2));
+}
 void Camera::FilterSpritesForView(std::vector<SpriteInfo> &spritesToDraw) {
 	if (!spritesToDraw.empty()) {
 		//Calculate a buffer so  likelyhood is low we stop drawing a sprite while part of it is visible. 

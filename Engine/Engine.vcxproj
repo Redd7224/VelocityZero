@@ -23,6 +23,7 @@
     <ClCompile Include="src\core\game.cpp" />
     <ClCompile Include="src\core\inputHandler.cpp" />
     <ClCompile Include="src\core\main.cpp" />
+    <ClCompile Include="src\core\player.cpp" />
     <ClCompile Include="src\core\renderer.cpp" />
     <ClCompile Include="src\core\window.cpp" />
   </ItemGroup>
@@ -33,6 +34,7 @@
     <ClInclude Include="src\core\inputData.h" />
     <ClInclude Include="src\core\main.h" />
     <ClInclude Include="src\core\pch.h" />
+    <ClInclude Include="src\core\player.h" />
     <ClInclude Include="src\core\renderer.h" />
     <ClInclude Include="src\core\spriteInfo.h" />
     <ClInclude Include="src\core\StepTimer.h" />

@@ -4,7 +4,7 @@
 #include "spriteInfo.h"
 #include "camera.h"
 #include "inputData.h"
-
+#include "player.h"
 class Game
 {
 public:
@@ -14,7 +14,7 @@ public:
 	std::vector<SpriteInfo> m_spritesToDraw;
 private:
 	void GenerateDummyLevel();
-	
+	Player* m_pPlayer;
 	std::vector<SpriteInfo> m_currentLevelSpriteInfo;
 	Camera* m_pCamera;
 };

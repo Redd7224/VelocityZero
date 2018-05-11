@@ -46,6 +46,8 @@ int CALLBACK WinMain(HINSTANCE appInstance, HINSTANCE prevInstance, LPSTR cmdLin
 	
 	CreateWICTextureFromFile(renderer.getDevice(), L"./art/PH_ground.png", nullptr, texture.ReleaseAndGetAddressOf());
 	textureMap["PH_ground.png"] = texture;
+	CreateWICTextureFromFile(renderer.getDevice(), L"./art/perspectiveTest1.png", nullptr, texture.ReleaseAndGetAddressOf());
+	textureMap["perspectiveTest1.png"] = texture;
 	Game game = Game(XMFLOAT2(800,600));
 	
 	int x = 0;
@@ -66,11 +68,12 @@ int CALLBACK WinMain(HINSTANCE appInstance, HINSTANCE prevInstance, LPSTR cmdLin
 		// Main loop
 		// Get Input
 		//	
+		inputHander->Update();
+
 		// Game Engine Update pass input get out things to draww
 		s_timer.Tick([&]()
 		{
 			float delta = float(s_timer.GetElapsedSeconds());
-			inputHander->Update();
 			game.Update(delta, inputHander->m_pInputData);
 		});
 		
@@ -82,8 +85,9 @@ int CALLBACK WinMain(HINSTANCE appInstance, HINSTANCE prevInstance, LPSTR cmdLin
 		m_spriteBatch->Begin();
 		for (auto &spriteInfo : game.m_spritesToDraw) // access by reference to avoid copying
 		{
-			m_spriteBatch->Draw(textureMap[spriteInfo.textureName].Get(), spriteInfo.position, nullptr, Colors::White, spriteInfo.rotation, XMFLOAT2(0, 0));
+			m_spriteBatch->Draw(textureMap[spriteInfo.textureName].Get(), spriteInfo.position, spriteInfo.sourceRect, Colors::White, spriteInfo.rotation, XMFLOAT2(0, 0));
 		}
+		
 		m_spriteBatch->End();
 
 
