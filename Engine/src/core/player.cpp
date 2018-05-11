@@ -51,7 +51,7 @@ void Player::Move(InputData* inputData, float deltaTime) {
 		m_SpriteInfo.spriteIdx.x = 4;
 		break;
 	case 2:
-		yDiagMod = 2;
+		
 		isoX = -1;
 		isoY = -1;
 		m_SpriteInfo.spriteIdx.x = 0;
