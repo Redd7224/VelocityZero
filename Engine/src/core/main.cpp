@@ -48,6 +48,8 @@ int CALLBACK WinMain(HINSTANCE appInstance, HINSTANCE prevInstance, LPSTR cmdLin
 	
 	CreateWICTextureFromFile(renderer.getDevice(), L"./art/PH_ground.png", nullptr, texture.ReleaseAndGetAddressOf());
 	textureMap["PH_ground.png"] = texture;
+	CreateWICTextureFromFile(renderer.getDevice(), L"./art/PH_wall.png", nullptr, texture.ReleaseAndGetAddressOf());
+	textureMap["PH_wall.png"] = texture;
 	CreateWICTextureFromFile(renderer.getDevice(), L"./art/perspectiveTest1.png", nullptr, texture.ReleaseAndGetAddressOf());
 	textureMap["perspectiveTest1.png"] = texture;
 	Game game = Game(XMFLOAT2(800,600));
@@ -99,7 +101,7 @@ int CALLBACK WinMain(HINSTANCE appInstance, HINSTANCE prevInstance, LPSTR cmdLin
 				texture = textureMap[currSprite->textureName].Get();
 				lastTextureName = currSprite->textureName;
 			}
-			m_spriteBatch->Draw(texture, currSprite->position, currSprite->sourceRect, Colors::White, currSprite->rotation, XMFLOAT2(0, 0));
+			m_spriteBatch->Draw(texture, currSprite->position, currSprite->sourceRect, Colors::White, currSprite->rotation, XMFLOAT2(0, 0),currSprite->scale, DirectX::SpriteEffects_None, 0.0f);
 		}
 
 		m_spriteBatch->End();

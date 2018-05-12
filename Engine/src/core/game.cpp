@@ -5,7 +5,7 @@ Game::Game(DirectX::XMFLOAT2 targetResolution) {
 	GenerateDummyLevel2();
 	GenerateDummyLevelChunks();
 	m_pPlayer = new Player();
-	m_pPlayer->m_position = DirectX::XMFLOAT2(7500, 7500);
+	m_pPlayer->m_position = DirectX::XMFLOAT2(100, 100);
 
 	chunkss.resize(chunksSize * chunksSize);
 }
@@ -37,25 +37,29 @@ void Game::Update(float deltaTime, InputData* inputData) {
 	drawChunkData(x, y+1); // 8
 	drawChunkData(x + 1, y+1); // 9
 
+
+
+	m_pCamera->FilterSpriteForView(m_test, spritesToDraw, drawCount);
+
 	m_pCamera->FilterSpriteForView(m_pPlayer->m_SpriteInfo, spritesToDraw, drawCount);
+
+
 	int foox = 1;
 }
 
 void Game::drawChunkData(int x, int y) {
-	try {
+	if (x < 0 || y < 0) {
+		return;
+	}
 	//Maybe getting chunk pointer is faster then getting it in the loopyloop.
 	ChunkData* chunk = &chunkss[x * chunksSize + y];
-	//TODO getsize call wss slow. This needs to be a const var
+	//TODO getsize call was slow. This needs to be a const var
 	for (size_t i = 0; i < 256; i++)
 	{
 		m_pCamera->FilterSpriteForView(chunk->tiles[i].m_spriteInfo, spritesToDraw, drawCount);
-//		tileSprites.push_back(chunkss[x * 16 + y].tiles[i].m_spriteInfo);
+
 	}
-//	m_pCamera->FilterSpritesForView(tileSprites, spritesToDraw, drawCount);
-	}
-	catch (std::out_of_range& err) {
-		// chunk doesnt eist. this is probably faster then size call?  We should limit playermovement / level data so this doesnt happen
-	}
+
 	
 }
 
@@ -155,6 +159,21 @@ void Game::GenerateDummyLevelChunks() {
 			chunkss[i * chunksSize + j] = cd;
 		}
 	}
+
+	float x = 32 * 0;
+	float y = 32 * 0;
+	float isox = x - y;
+	float isoy = (x + y) / 2;
+	m_test.textureName = "PH_wall.png";
+	m_test.sourceRect = new RECT();
+	m_test.sourceRect->bottom = 128;
+	m_test.sourceRect->right = 64;
+	m_test.sourceRect->top = 0;
+	m_test.sourceRect->left = 0;
+	m_test.systemPosition = DirectX::XMFLOAT2(x, y);
+	m_test.isoPosition = DirectX::XMFLOAT2(isox, isoy);
+	m_test.position = DirectX::XMFLOAT2(isox, isoy);
+
 
 }
 

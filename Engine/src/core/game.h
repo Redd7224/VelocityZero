@@ -29,7 +29,7 @@ private:
 	Player* m_pPlayer;
 	std::vector<SpriteInfo> m_currentLevelSpriteInfo;
 	std::vector<ChunkData> chunkss;
-
+	SpriteInfo m_test;
 	Camera* m_pCamera;
 
 	const int chunksSize = 32;

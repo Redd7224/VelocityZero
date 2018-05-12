@@ -5,7 +5,7 @@ Player::Player() {
 	m_SpriteInfo.textureName="perspectiveTest1.png";
 	m_SpriteInfo.spriteSize.x = 64;
 	m_SpriteInfo.spriteSize.y = 64;
-	m_SpriteInfo.scale = 0;
+	m_SpriteInfo.scale = 1;
 	m_SpriteInfo.rotation = 0;
 	m_SpriteInfo.spriteIdx.x = 0;
 	m_SpriteInfo.isHoizontalSheet = true;

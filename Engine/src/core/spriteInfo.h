@@ -10,7 +10,7 @@ struct SpriteInfo {
 	DirectX::XMFLOAT2 isoPosition;
 	DirectX::XMFLOAT2 systemPosition;
 	RECT* sourceRect;
-	float scale;
+	float scale = 1;
 	float rotation;
 	bool isHoizontalSheet;
 	DirectX::XMFLOAT2 spriteSize;
