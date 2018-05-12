@@ -89,10 +89,17 @@ int CALLBACK WinMain(HINSTANCE appInstance, HINSTANCE prevInstance, LPSTR cmdLin
 			m_spriteBatch->Draw(textureMap[spriteInfo.textureName].Get(), spriteInfo.position, spriteInfo.sourceRect, Colors::White, spriteInfo.rotation, XMFLOAT2(0, 0));
 		}
 		*/
-       		for (size_t i = 0; i < game.drawCount; i++)
+		std::string lastTextureName = "";
+		ID3D11ShaderResourceView* texture = nullptr;
+       	for (size_t i = 0; i < game.drawCount; i++)
 		{
+			//TODO looking up from the map is expensive. quick work around here to keep texture pointer unless texture changes. 
 			SpriteInfo* currSprite = game.spritesToDraw[i];
-			m_spriteBatch->Draw(textureMap[currSprite->textureName].Get(), currSprite->position, currSprite->sourceRect, Colors::White, currSprite->rotation, XMFLOAT2(0, 0));
+			if (lastTextureName != currSprite->textureName) {
+				texture = textureMap[currSprite->textureName].Get();
+				lastTextureName = currSprite->textureName;
+			}
+			m_spriteBatch->Draw(texture, currSprite->position, currSprite->sourceRect, Colors::White, currSprite->rotation, XMFLOAT2(0, 0));
 		}
 
 		m_spriteBatch->End();

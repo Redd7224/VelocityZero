@@ -1,10 +1,15 @@
 #pragma once
 #include <vector>
+#include <array>
 #include <DirectXMath.h>
+
 #include "spriteInfo.h"
 #include "camera.h"
 #include "inputData.h"
 #include "player.h"
+#include "chunkData.h"
+#include "tileInfo.h"
+
 class Game
 {
 public:
@@ -19,7 +24,13 @@ public:
 private:
 	void GenerateDummyLevel();
 	void GenerateDummyLevel2();
+	void GenerateDummyLevelChunks();
+	void drawChunkData(int x, int y);
 	Player* m_pPlayer;
 	std::vector<SpriteInfo> m_currentLevelSpriteInfo;
+	std::vector<ChunkData> chunkss;
+
 	Camera* m_pCamera;
+
+	const int chunksSize = 32;
 };

@@ -5,6 +5,7 @@
 //TODO Actually figure out all the things we need to draw and add it to this struct
 struct SpriteInfo {
 	std::string textureName;
+	//TODO move SystemPosition and IsoPosition into a different struct/class. These are not part of the sprite but part of the system
 	DirectX::XMFLOAT2 position;
 	DirectX::XMFLOAT2 isoPosition;
 	DirectX::XMFLOAT2 systemPosition;

@@ -71,6 +71,12 @@
     <ClInclude Include="src\core\player.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\core\chunkData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\tileInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

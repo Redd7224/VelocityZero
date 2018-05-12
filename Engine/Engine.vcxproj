@@ -29,6 +29,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\core\camera.h" />
+    <ClInclude Include="src\core\chunkData.h" />
     <ClInclude Include="src\core\game.h" />
     <ClInclude Include="src\core\inputHandler.h" />
     <ClInclude Include="src\core\inputData.h" />
@@ -38,6 +39,7 @@
     <ClInclude Include="src\core\renderer.h" />
     <ClInclude Include="src\core\spriteInfo.h" />
     <ClInclude Include="src\core\StepTimer.h" />
+    <ClInclude Include="src\core\tileInfo.h" />
     <ClInclude Include="src\core\window.h" />
   </ItemGroup>
   <ItemGroup>
