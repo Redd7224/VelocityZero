@@ -6,6 +6,8 @@
 struct SpriteInfo {
 	std::string textureName;
 	DirectX::XMFLOAT2 position;
+	DirectX::XMFLOAT2 isoPosition;
+	DirectX::XMFLOAT2 systemPosition;
 	RECT* sourceRect;
 	float scale;
 	float rotation;

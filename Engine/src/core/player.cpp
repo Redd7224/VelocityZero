@@ -107,6 +107,14 @@ void Player::Move(InputData* inputData, float deltaTime) {
 		m_position.x += -1 * (isoX * moveSpeed) / yDiagMod * deltaTime;
 		m_position.y += -1 * (isoY * moveSpeed) / yDiagMod * deltaTime;
 
+		m_SpriteInfo.systemPosition.x = (m_position.x - m_position.y);
+		m_SpriteInfo.systemPosition.y = (m_position.x + m_position.y) / 2;
+
+		m_SpriteInfo.isoPosition.x = (m_position.x - m_position.y);
+		m_SpriteInfo.isoPosition.y = (m_position.x + m_position.y) / 2;
+
+
+
 		m_SpriteInfo.position.x = (m_position.x - m_position.y);
 		m_SpriteInfo.position.y = (m_position.x + m_position.y) / 2;
 		/* PURE ISO METRIC*/

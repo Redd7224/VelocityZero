@@ -83,11 +83,18 @@ int CALLBACK WinMain(HINSTANCE appInstance, HINSTANCE prevInstance, LPSTR cmdLin
 		renderer.beginFrame();
 		//User renderer to render things on frame
 		m_spriteBatch->Begin();
+		/*
 		for (auto &spriteInfo : game.m_spritesToDraw) // access by reference to avoid copying
 		{
 			m_spriteBatch->Draw(textureMap[spriteInfo.textureName].Get(), spriteInfo.position, spriteInfo.sourceRect, Colors::White, spriteInfo.rotation, XMFLOAT2(0, 0));
 		}
-		
+		*/
+       		for (size_t i = 0; i < game.drawCount; i++)
+		{
+			SpriteInfo* currSprite = game.spritesToDraw[i];
+			m_spriteBatch->Draw(textureMap[currSprite->textureName].Get(), currSprite->position, currSprite->sourceRect, Colors::White, currSprite->rotation, XMFLOAT2(0, 0));
+		}
+
 		m_spriteBatch->End();
 
 

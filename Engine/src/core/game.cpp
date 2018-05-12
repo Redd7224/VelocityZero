@@ -5,23 +5,25 @@ Game::Game(DirectX::XMFLOAT2 targetResolution) {
 	GenerateDummyLevel2();
 	m_pPlayer = new Player();
 	m_pPlayer->m_position = DirectX::XMFLOAT2(400, 300);
+
+
 }
 Game::~Game() {}
 void Game::Update(float deltaTime, InputData* inputData) {
 	int x = 1;
+	
 	//we may not want to clear . but may be easest for now. 
-	m_spritesToDraw.clear();
-	m_spritesToDraw.insert(m_spritesToDraw.end(), m_currentLevelSpriteInfo.begin(), m_currentLevelSpriteInfo.end());
 
 	m_pPlayer->Move(inputData, deltaTime);
 
-	m_spritesToDraw.push_back(m_pPlayer->m_SpriteInfo);
 
 	//m_pCamera->Move(DirectX::XMFLOAT2(30 * inputData->xAxis, 30 * inputData->yAxis),deltaTime);
 	m_pCamera->FollowCentered(m_pPlayer->m_SpriteInfo.position);
 
-	//Filter sprites that are in view. This also translates them to screen pos
-	m_pCamera->FilterSpritesForView(m_spritesToDraw);
+	drawCount = 0;
+	m_pCamera->FilterSpritesForView(m_currentLevelSpriteInfo, spritesToDraw, drawCount);
+	m_pCamera->FilterSpriteForView(m_pPlayer->m_SpriteInfo, spritesToDraw, drawCount);
+	int foox = 1;
 }
 
 void Game::GenerateDummyLevel() {
@@ -59,9 +61,9 @@ void Game::GenerateDummyLevel() {
 void Game::GenerateDummyLevel2() {
 	float startx = 400;
 	float starty = 300;
-	for (size_t j = 1; j < 10; j++)
+	for (size_t j = 1; j < 100; j++)
 	{
-		for (size_t i = 1; i < 10; i++)
+		for (size_t i = 1; i < 100; i++)
 		{
 			float x = startx + 32 * i;
 			float y = starty+ 32 * j;
@@ -74,6 +76,8 @@ void Game::GenerateDummyLevel2() {
 			si.sourceRect->right = 64;
 			si.sourceRect->top = 0;
 			si.sourceRect->left = 0;
+			si.systemPosition = DirectX::XMFLOAT2(x, y);
+			si.isoPosition = DirectX::XMFLOAT2(isox, isoy);
 			si.position = DirectX::XMFLOAT2(isox, isoy);
 			m_currentLevelSpriteInfo.push_back(si);
 		}

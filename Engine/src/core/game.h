@@ -12,6 +12,10 @@ public:
 	~Game();
 	void Update(float deltaTime,InputData* inputData);
 	std::vector<SpriteInfo> m_spritesToDraw;
+
+	SpriteInfo *spritesToDraw[10000];
+	int drawCount = 0;
+
 private:
 	void GenerateDummyLevel();
 	void GenerateDummyLevel2();
