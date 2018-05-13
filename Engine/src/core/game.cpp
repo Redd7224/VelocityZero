@@ -2,28 +2,29 @@
 
 Game::Game(DirectX::XMFLOAT2 targetResolution) {
 	m_pCamera = new Camera(targetResolution);
-	GenerateDummyLevel2();
 	GenerateDummyLevelChunks();
 	m_pPlayer = new Player();
-	m_pPlayer->m_position = DirectX::XMFLOAT2(100, 100);
+	m_pPlayer->m_position = DirectX::XMFLOAT2(64, 64);
 
 	chunkss.resize(chunksSize * chunksSize);
 }
 Game::~Game() {}
 void Game::Update(float deltaTime, InputData* inputData) {
 	
-	//we may not want to clear . but may be easest for now. 
-
+	//Previous position and colission here is just a test
+	DirectX::XMFLOAT2 prevPos = m_pPlayer->m_position;
 	m_pPlayer->Move(inputData, deltaTime);
-
+	if (m_pPlayer->m_SpriteInfo.collider.Intersects(m_test.collider)) {
+		m_pPlayer->m_position = prevPos;
+	}
 
 	//m_pCamera->Move(DirectX::XMFLOAT2(30 * inputData->xAxis, 30 * inputData->yAxis),deltaTime);
 	m_pCamera->FollowCentered(m_pPlayer->m_SpriteInfo.position);
 
 	drawCount = 0;
-	//m_pCamera->FilterSpritesForView(m_currentLevelSpriteInfo, spritesToDraw, drawCount);
-
 	
+
+	//Get chunks to draw
 	int x = (int) m_pPlayer->m_position.x / (16 * 32);
 	int y = (int) m_pPlayer->m_position.y / (16 * 32);
 
@@ -31,27 +32,36 @@ void Game::Update(float deltaTime, InputData* inputData) {
 	drawChunkData(x, y -1); // 2
 	drawChunkData(x + 1, y-1); // 3
 	drawChunkData(x -1, y); // 4
+	//Maybe we should draw player in this chunk, splice it in to get depth right
 	drawChunkData(x, y); // 5 
+	
 	drawChunkData(x+1, y); // 6
 	drawChunkData(x - 1, y + 1); // 7
 	drawChunkData(x, y+1); // 8
 	drawChunkData(x + 1, y+1); // 9
 
+	if (m_pPlayer->m_position.y > m_test.systemPosition.y) {
 
+		m_pCamera->FilterSpriteForView(m_test, spritesToDraw, drawCount);
+		m_pCamera->FilterSpriteForView(m_pPlayer->m_SpriteInfo, spritesToDraw, drawCount);
 
-	m_pCamera->FilterSpriteForView(m_test, spritesToDraw, drawCount);
+	}
+	else {
+		m_pCamera->FilterSpriteForView(m_pPlayer->m_SpriteInfo, spritesToDraw, drawCount);
+		m_pCamera->FilterSpriteForView(m_test, spritesToDraw, drawCount);
+	}
 
-	m_pCamera->FilterSpriteForView(m_pPlayer->m_SpriteInfo, spritesToDraw, drawCount);
+	
 
 
 	int foox = 1;
 }
 
 void Game::drawChunkData(int x, int y) {
+	//Break if  there is no way the chunk exists.
 	if (x < 0 || y < 0) {
 		return;
 	}
-	//Maybe getting chunk pointer is faster then getting it in the loopyloop.
 	ChunkData* chunk = &chunkss[x * chunksSize + y];
 	//TODO getsize call was slow. This needs to be a const var
 	for (size_t i = 0; i < 256; i++)
@@ -63,67 +73,10 @@ void Game::drawChunkData(int x, int y) {
 	
 }
 
-void Game::GenerateDummyLevel() {
-	for (size_t j = 1; j < 30; j++)
-	{
-		float y = 10 + (16 * j);
-		int rowLength = 11;
-		if (j % 2 == 0) {
-			rowLength--;
-		}
-		
-		for (size_t i = 1; i < rowLength; i++)
-		{
-			float x = 0;
-			if (j % 2 == 0) {
-				x = (64 * i) + 32;
-			}
-			else {
-				x = 64 * i;
-			}
-			SpriteInfo si;
-			si.textureName = "PH_ground.png";
-			si.sourceRect = new RECT();
-			si.sourceRect->bottom = 64;
-			si.sourceRect->right = 64;
-			si.sourceRect->top = 0;
-			si.sourceRect->left= 0;
-			si.position = DirectX::XMFLOAT2(x, y );
-			m_currentLevelSpriteInfo.push_back(si);
-		}
-	}
-}
-
-
-void Game::GenerateDummyLevel2() {
-
-	for (size_t j = 1; j < 16; j++)
-	{
-		for (size_t i = 1; i < 16; i++)
-		{
-			float x = 32 * i;
-			float y = 32 * j;
-			float isox = x - y;
-			float isoy = (x + y) / 2;
-			SpriteInfo si;
-			si.textureName = "PH_ground.png";
-			si.sourceRect = new RECT();
-			si.sourceRect->bottom = 64;
-			si.sourceRect->right = 64;
-			si.sourceRect->top = 0;
-			si.sourceRect->left = 0;
-			si.systemPosition = DirectX::XMFLOAT2(x, y);
-			si.isoPosition = DirectX::XMFLOAT2(isox, isoy);
-			si.position = DirectX::XMFLOAT2(isox, isoy);
-			m_currentLevelSpriteInfo.push_back(si);
-		}
-	}
-}
-
-
 void Game::GenerateDummyLevelChunks() {
 	chunkss.resize(chunksSize * chunksSize);
-	
+	LevelGenerator lg;
+	lg.Generate(100);
 
 	for (size_t i = 0; i < chunksSize; i++) {
 		for (size_t j = 0; j < chunksSize; j++) {
@@ -148,6 +101,7 @@ void Game::GenerateDummyLevelChunks() {
 					si.sourceRect->right = 64;
 					si.sourceRect->top = 0;
 					si.sourceRect->left = 0;
+					si.origion = DirectX::XMFLOAT2(0, 0);
 					si.systemPosition = DirectX::XMFLOAT2(ti.x, ti.y);
 					si.isoPosition = DirectX::XMFLOAT2(isox, isoy);
 					si.position = DirectX::XMFLOAT2(isox, isoy);
@@ -160,8 +114,8 @@ void Game::GenerateDummyLevelChunks() {
 		}
 	}
 
-	float x = 32 * 0;
-	float y = 32 * 0;
+	float x = 32 * 8;
+	float y = 32 * 6;
 	float isox = x - y;
 	float isoy = (x + y) / 2;
 	m_test.textureName = "PH_wall.png";
@@ -170,10 +124,11 @@ void Game::GenerateDummyLevelChunks() {
 	m_test.sourceRect->right = 64;
 	m_test.sourceRect->top = 0;
 	m_test.sourceRect->left = 0;
+	m_test.origion = DirectX::XMFLOAT2(0, 128);
 	m_test.systemPosition = DirectX::XMFLOAT2(x, y);
 	m_test.isoPosition = DirectX::XMFLOAT2(isox, isoy);
 	m_test.position = DirectX::XMFLOAT2(isox, isoy);
-
+	m_test.collider = DirectX::BoundingSphere(DirectX::XMFLOAT3(x, y, 0), 16);
 
 }
 

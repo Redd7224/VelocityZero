@@ -22,6 +22,7 @@
     <ClCompile Include="src\core\camera.cpp" />
     <ClCompile Include="src\core\game.cpp" />
     <ClCompile Include="src\core\inputHandler.cpp" />
+    <ClCompile Include="src\core\levelGenerator.cpp" />
     <ClCompile Include="src\core\main.cpp" />
     <ClCompile Include="src\core\player.cpp" />
     <ClCompile Include="src\core\renderer.cpp" />
@@ -33,6 +34,7 @@
     <ClInclude Include="src\core\game.h" />
     <ClInclude Include="src\core\inputHandler.h" />
     <ClInclude Include="src\core\inputData.h" />
+    <ClInclude Include="src\core\levelGenerator.h" />
     <ClInclude Include="src\core\main.h" />
     <ClInclude Include="src\core\pch.h" />
     <ClInclude Include="src\core\player.h" />

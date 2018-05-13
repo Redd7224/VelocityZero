@@ -8,7 +8,9 @@ Player::Player() {
 	m_SpriteInfo.scale = 1;
 	m_SpriteInfo.rotation = 0;
 	m_SpriteInfo.spriteIdx.x = 0;
+	m_SpriteInfo.origion = DirectX::XMFLOAT2(0, 64);
 	m_SpriteInfo.isHoizontalSheet = true;
+	m_SpriteInfo.collider = DirectX::BoundingSphere(DirectX::XMFLOAT3(m_position.x, m_position.y, 0), 16);
 
 }
 
@@ -132,6 +134,9 @@ void Player::Move(InputData* inputData, float deltaTime) {
 		m_SpriteInfo.position.y = m_position.y;
 	}
 
+	//Update Colider
+	m_SpriteInfo.collider.Center.x = m_position.x;
+	m_SpriteInfo.collider.Center.y = m_position.y;
 }
 
 void Player::UpdateSpriteIdxByDirection(int direction) {

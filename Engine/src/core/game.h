@@ -9,6 +9,8 @@
 #include "player.h"
 #include "chunkData.h"
 #include "tileInfo.h"
+#include "levelGenerator.h"
+
 
 class Game
 {
@@ -22,8 +24,6 @@ public:
 	int drawCount = 0;
 
 private:
-	void GenerateDummyLevel();
-	void GenerateDummyLevel2();
 	void GenerateDummyLevelChunks();
 	void drawChunkData(int x, int y);
 	Player* m_pPlayer;
