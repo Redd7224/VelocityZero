@@ -75,8 +75,8 @@ void Game::drawChunkData(int x, int y) {
 
 void Game::GenerateDummyLevelChunks() {
 	chunkss.resize(chunksSize * chunksSize);
-	LevelGenerator lg;
-	lg.Generate(100);
+	LevelGenerator lg(100);
+	lg.Generate();
 
 	for (size_t i = 0; i < chunksSize; i++) {
 		for (size_t j = 0; j < chunksSize; j++) {
