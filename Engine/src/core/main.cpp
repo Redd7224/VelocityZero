@@ -97,11 +97,13 @@ int CALLBACK WinMain(HINSTANCE appInstance, HINSTANCE prevInstance, LPSTR cmdLin
 		{
 			//TODO looking up from the map is expensive. quick work around here to keep texture pointer unless texture changes. 
 			SpriteInfo* currSprite = game.spritesToDraw[i];
-			if (lastTextureName != currSprite->textureName) {
-				texture = textureMap[currSprite->textureName].Get();
-				lastTextureName = currSprite->textureName;
+			if(!currSprite->textureName.empty()){
+				if (lastTextureName != currSprite->textureName) {
+					texture = textureMap[currSprite->textureName].Get();
+					lastTextureName = currSprite->textureName;
+				}
+				m_spriteBatch->Draw(texture, currSprite->position, currSprite->sourceRect, Colors::White, currSprite->rotation, currSprite->origion,currSprite->scale, DirectX::SpriteEffects_None, 0.0f);
 			}
-			m_spriteBatch->Draw(texture, currSprite->position, currSprite->sourceRect, Colors::White, currSprite->rotation, currSprite->origion,currSprite->scale, DirectX::SpriteEffects_None, 0.0f);
 		}
 
 		m_spriteBatch->End();

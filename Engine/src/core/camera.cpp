@@ -103,8 +103,8 @@ void Camera::FilterSpritesForView(std::vector<SpriteInfo> &spritesToDraw, Sprite
 
 void Camera::FilterSpriteForView(SpriteInfo &sprite, SpriteInfo *spritesOut[], int &drawCount) {
 	SpriteInfo* currSpriteInfo = &sprite;
-	float xBuffer = m_targetResolution.x * .2;
-	float yBuffer = m_targetResolution.y * .2;
+	float xBuffer = m_targetResolution.x * .3;
+	float yBuffer = m_targetResolution.y * .3;
 	//check if sprite is in viewport
 	bool isInViewport = false;
 	//TODO factor in sprite size?
@@ -115,7 +115,7 @@ void Camera::FilterSpriteForView(SpriteInfo &sprite, SpriteInfo *spritesOut[], i
 	if ((currSpriteInfo->isoPosition.x + xBuffer >= m_viewport.x && currSpriteInfo->isoPosition.x - xBuffer <= m_viewport.z)) {
 		isXInViewPort = true;
 	}
-	if ((currSpriteInfo->isoPosition.y + yBuffer >= m_viewport.y && currSpriteInfo->isoPosition.y <= m_viewport.w)) {
+	if ((currSpriteInfo->isoPosition.y + yBuffer >= m_viewport.y && currSpriteInfo->isoPosition.y - yBuffer <= m_viewport.w)) {
 		isYInViewPort = true;
 	}
 	if (isXInViewPort && isYInViewPort) {

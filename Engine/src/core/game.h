@@ -26,6 +26,8 @@ public:
 private:
 	void GenerateDummyLevelChunks();
 	void drawChunkData(int x, int y);
+	void drawChunkDataWithPlayer(int x, int y);
+
 	Player* m_pPlayer;
 	std::vector<SpriteInfo> m_currentLevelSpriteInfo;
 	std::vector<ChunkData> chunkss;

@@ -35,6 +35,8 @@
     <ClInclude Include="src\core\inputHandler.h" />
     <ClInclude Include="src\core\inputData.h" />
     <ClInclude Include="src\core\levelGenerator.h" />
+    <ClInclude Include="src\core\LevelGeneratorCorridor.h" />
+    <ClInclude Include="src\core\LevelGeneratorRoom.h" />
     <ClInclude Include="src\core\main.h" />
     <ClInclude Include="src\core\pch.h" />
     <ClInclude Include="src\core\player.h" />
