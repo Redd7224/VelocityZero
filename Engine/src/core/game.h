@@ -10,7 +10,8 @@
 #include "chunkData.h"
 #include "tileInfo.h"
 #include "levelGenerator.h"
-
+#include "spritesToDraw.h"
+#define SPRITELAYERSCOUNT 5 
 
 class Game
 {
@@ -20,15 +21,19 @@ public:
 	void Update(float deltaTime,InputData* inputData);
 	std::vector<SpriteInfo> m_spritesToDraw;
 
-	SpriteInfo *spritesToDraw[10000];
-	int drawCount = 0;
+	SpritesToDraw spritesToDrawLayers[SPRITELAYERSCOUNT];
 
 private:
 	void GenerateDummyLevelChunks();
 	void drawChunkData(int x, int y);
 	void drawChunkDataWithPlayer(int x, int y);
 
+	void playerCollision();
+
 	Player* m_pPlayer;
+	//used for player col, doesnt belong here
+	DirectX::XMFLOAT2 prevPos;
+	DirectX::XMFLOAT2 playerChunk;
 	std::vector<SpriteInfo> m_currentLevelSpriteInfo;
 	std::vector<ChunkData> chunkss;
 	SpriteInfo m_test;

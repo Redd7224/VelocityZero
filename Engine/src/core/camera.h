@@ -16,6 +16,9 @@ public:
 private:
 	DirectX::XMFLOAT4 m_viewport;
 	DirectX::XMFLOAT2 m_targetResolution;
+	DirectX::XMFLOAT2 m_buffer;
+
+
 	void TranslateSpriteToScreenPosition(SpriteInfo &spriteInfo);
 
 

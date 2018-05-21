@@ -1,8 +1,8 @@
 #pragma once
-#include "spriteInfo.h"
-
+#include "GameObject.h"
 struct TileInfo {
-	int x;
-	int y;
-	SpriteInfo m_spriteInfo;
+	int x = -1;
+	int y = -1;
+	GameObject tileGameObjectsByLayer[5];
+
 };

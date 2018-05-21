@@ -4,6 +4,7 @@
 Camera::Camera(DirectX::XMFLOAT2 targetResolution) {
 	m_targetResolution = targetResolution;
 	m_viewport = DirectX::XMFLOAT4(0, 0, targetResolution.x, targetResolution.y);
+	m_buffer = DirectX::XMFLOAT2(targetResolution.x * .1, targetResolution.y * .1);
 }
 Camera::~Camera() {}
 
@@ -103,29 +104,29 @@ void Camera::FilterSpritesForView(std::vector<SpriteInfo> &spritesToDraw, Sprite
 
 void Camera::FilterSpriteForView(SpriteInfo &sprite, SpriteInfo *spritesOut[], int &drawCount) {
 	SpriteInfo* currSpriteInfo = &sprite;
-	float xBuffer = m_targetResolution.x * .3;
-	float yBuffer = m_targetResolution.y * .3;
-	//check if sprite is in viewport
-	bool isInViewport = false;
-	//TODO factor in sprite size?
+	if (currSpriteInfo->spriteIdx.x != -1) {
+		//check if sprite is in viewport
+		bool isInViewport = false;
+		//TODO factor in sprite size?
 
-	//TODO refactor, this is structed this way to easily debug
-	bool isXInViewPort = false;
-	bool isYInViewPort = false;
-	if ((currSpriteInfo->isoPosition.x + xBuffer >= m_viewport.x && currSpriteInfo->isoPosition.x - xBuffer <= m_viewport.z)) {
-		isXInViewPort = true;
-	}
-	if ((currSpriteInfo->isoPosition.y + yBuffer >= m_viewport.y && currSpriteInfo->isoPosition.y - yBuffer <= m_viewport.w)) {
-		isYInViewPort = true;
-	}
-	if (isXInViewPort && isYInViewPort) {
-		isInViewport = true;
-	}
-	if (isInViewport) {
-		currSpriteInfo->position.x = currSpriteInfo->isoPosition.x + (-1 * m_viewport.x);
-		currSpriteInfo->position.y = currSpriteInfo->isoPosition.y + (-1 * m_viewport.y);
-		spritesOut[drawCount] = currSpriteInfo;
-		drawCount++;
+		//TODO refactor, this is structed this way to easily debug
+		bool isXInViewPort = false;
+		bool isYInViewPort = false;
+		if ((currSpriteInfo->isoPosition.x + m_buffer.x >= m_viewport.x && currSpriteInfo->isoPosition.x - m_buffer.x <= m_viewport.z)) {
+			isXInViewPort = true;
+		}
+		if ((currSpriteInfo->isoPosition.y + m_buffer.y >= m_viewport.y && currSpriteInfo->isoPosition.y - m_buffer.y <= m_viewport.w)) {
+			isYInViewPort = true;
+		}
+		if (isXInViewPort && isYInViewPort) {
+			isInViewport = true;
+		}
+		if (isInViewport) {
+			currSpriteInfo->position.x = currSpriteInfo->isoPosition.x + (-1 * m_viewport.x);
+			currSpriteInfo->position.y = currSpriteInfo->isoPosition.y + (-1 * m_viewport.y);
+			spritesOut[drawCount] = currSpriteInfo;
+			drawCount++;
+		}
 	}
 }
 

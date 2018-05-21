@@ -20,7 +20,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\core\camera.cpp" />
+    <ClCompile Include="src\core\collider.cpp" />
     <ClCompile Include="src\core\game.cpp" />
+    <ClCompile Include="src\core\gameObject.cpp" />
     <ClCompile Include="src\core\inputHandler.cpp" />
     <ClCompile Include="src\core\levelGenerator.cpp" />
     <ClCompile Include="src\core\main.cpp" />
@@ -31,7 +33,9 @@
   <ItemGroup>
     <ClInclude Include="src\core\camera.h" />
     <ClInclude Include="src\core\chunkData.h" />
+    <ClInclude Include="src\core\collider.h" />
     <ClInclude Include="src\core\game.h" />
+    <ClInclude Include="src\core\gameObject.h" />
     <ClInclude Include="src\core\inputHandler.h" />
     <ClInclude Include="src\core\inputData.h" />
     <ClInclude Include="src\core\levelGenerator.h" />
@@ -42,6 +46,7 @@
     <ClInclude Include="src\core\player.h" />
     <ClInclude Include="src\core\renderer.h" />
     <ClInclude Include="src\core\spriteInfo.h" />
+    <ClInclude Include="src\core\spritesToDraw.h" />
     <ClInclude Include="src\core\StepTimer.h" />
     <ClInclude Include="src\core\tileInfo.h" />
     <ClInclude Include="src\core\window.h" />

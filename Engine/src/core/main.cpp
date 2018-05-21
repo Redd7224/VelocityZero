@@ -19,7 +19,7 @@ using namespace DirectX;
 
 //These vairables probably dont belong here
 //Map may not be as quick as just passing around and holding onto pointers
-std::map<std::string, ComPtr<ID3D11ShaderResourceView>> textureMap;
+std::map<int, ComPtr<ID3D11ShaderResourceView>> textureMap;
 // keyboard and mouse are singletons. 
 std::unique_ptr<DirectX::Keyboard> m_keyboard;
 //std::unique_ptr<DirectX::Mouse> m_mouse;
@@ -47,11 +47,11 @@ int CALLBACK WinMain(HINSTANCE appInstance, HINSTANCE prevInstance, LPSTR cmdLin
 	ComPtr<ID3D11ShaderResourceView> texture;
 	
 	CreateWICTextureFromFile(renderer.getDevice(), L"./art/PH_ground.png", nullptr, texture.ReleaseAndGetAddressOf());
-	textureMap["PH_ground.png"] = texture;
+	textureMap[1] = texture;
 	CreateWICTextureFromFile(renderer.getDevice(), L"./art/PH_wall.png", nullptr, texture.ReleaseAndGetAddressOf());
-	textureMap["PH_wall.png"] = texture;
+	textureMap[2] = texture;
 	CreateWICTextureFromFile(renderer.getDevice(), L"./art/perspectiveTest1.png", nullptr, texture.ReleaseAndGetAddressOf());
-	textureMap["perspectiveTest1.png"] = texture;
+	textureMap[3] = texture;
 	Game game = Game(XMFLOAT2(800,600));
 	
 	int x = 0;
@@ -91,19 +91,22 @@ int CALLBACK WinMain(HINSTANCE appInstance, HINSTANCE prevInstance, LPSTR cmdLin
 			m_spriteBatch->Draw(textureMap[spriteInfo.textureName].Get(), spriteInfo.position, spriteInfo.sourceRect, Colors::White, spriteInfo.rotation, XMFLOAT2(0, 0));
 		}
 		*/
-		std::string lastTextureName = "";
+		int lastTextureKey = 0;
 		ID3D11ShaderResourceView* texture = nullptr;
-       	for (size_t i = 0; i < game.drawCount; i++)
+		for (size_t i = 0; i < SPRITELAYERSCOUNT; i++)
 		{
-			//TODO looking up from the map is expensive. quick work around here to keep texture pointer unless texture changes. 
-			SpriteInfo* currSprite = game.spritesToDraw[i];
-			if(!currSprite->textureName.empty()){
-				if (lastTextureName != currSprite->textureName) {
-					texture = textureMap[currSprite->textureName].Get();
-					lastTextureName = currSprite->textureName;
+			for (size_t j = 0; j < game.spritesToDrawLayers[i].drawCount; j++)
+			{
+				SpriteInfo* currSprite = game.spritesToDrawLayers[i].spritesToDraw[j];
+				if (currSprite->textureKey != -1) {
+					if (lastTextureKey != currSprite->textureKey) {
+						texture = textureMap[currSprite->textureKey].Get();
+						lastTextureKey = currSprite->textureKey;
+					}
+					m_spriteBatch->Draw(texture, currSprite->position, currSprite->sourceRect, Colors::White, currSprite->rotation, currSprite->origion, currSprite->scale, DirectX::SpriteEffects_None, 0.0f);
 				}
-				m_spriteBatch->Draw(texture, currSprite->position, currSprite->sourceRect, Colors::White, currSprite->rotation, currSprite->origion,currSprite->scale, DirectX::SpriteEffects_None, 0.0f);
 			}
+			
 		}
 
 		m_spriteBatch->End();
