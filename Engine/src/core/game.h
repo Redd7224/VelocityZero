@@ -11,6 +11,7 @@
 #include "tileInfo.h"
 #include "levelGenerator.h"
 #include "spritesToDraw.h"
+#include "LevelData.h"
 #define SPRITELAYERSCOUNT 5 
 
 class Game
@@ -25,9 +26,10 @@ public:
 
 private:
 	void GenerateDummyLevelChunks();
+	void GenerateDummyLevel();
 	void drawChunkData(int x, int y);
 	void drawChunkDataWithPlayer(int x, int y);
-
+	void DrawSurroundingLevelData();
 	void playerCollision();
 
 	Player* m_pPlayer;
@@ -38,6 +40,6 @@ private:
 	std::vector<ChunkData> chunkss;
 	SpriteInfo m_test;
 	Camera* m_pCamera;
-
+	LevelData currLevelData;
 	const int chunksSize = 32;
 };

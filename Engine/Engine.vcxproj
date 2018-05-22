@@ -38,6 +38,7 @@
     <ClInclude Include="src\core\gameObject.h" />
     <ClInclude Include="src\core\inputHandler.h" />
     <ClInclude Include="src\core\inputData.h" />
+    <ClInclude Include="src\core\LevelData.h" />
     <ClInclude Include="src\core\levelGenerator.h" />
     <ClInclude Include="src\core\LevelGeneratorCorridor.h" />
     <ClInclude Include="src\core\LevelGeneratorRoom.h" />
