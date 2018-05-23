@@ -25,17 +25,14 @@ public:
 	SpritesToDraw spritesToDrawLayers[SPRITELAYERSCOUNT];
 
 private:
-	void GenerateDummyLevelChunks();
 	void GenerateDummyLevel();
-	void drawChunkData(int x, int y);
-	void drawChunkDataWithPlayer(int x, int y);
 	void DrawSurroundingLevelData();
 	void playerCollision();
 
 	Player* m_pPlayer;
 	//used for player col, doesnt belong here
 	DirectX::XMFLOAT2 prevPos;
-	DirectX::XMFLOAT2 playerChunk;
+	DirectX::XMFLOAT2 playerTile;
 	std::vector<SpriteInfo> m_currentLevelSpriteInfo;
 	std::vector<ChunkData> chunkss;
 	SpriteInfo m_test;
