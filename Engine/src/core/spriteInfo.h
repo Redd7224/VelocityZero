@@ -9,7 +9,7 @@ struct SpriteInfo {
 	DirectX::XMFLOAT2 position;
 	DirectX::XMFLOAT2 isoPosition;
 	DirectX::XMFLOAT2 systemPosition;
-	RECT* sourceRect;
+	RECT sourceRect;
 	float scale = 1;
 	float rotation;
 	bool isHoizontalSheet;
@@ -17,13 +17,11 @@ struct SpriteInfo {
 	DirectX::XMFLOAT2 spriteIdx = DirectX::XMFLOAT2(-1,-1);
 	DirectX::XMFLOAT2 origion;
 	void CalcSourceRECT() {
-		RECT* rt = new RECT();
 		if (isHoizontalSheet) {
-			rt->top = 0;
-			rt->bottom = spriteSize.y;
-			rt->left = spriteIdx.x * spriteSize.x;
-			rt->right = (spriteIdx.x + 1) * spriteSize.x;
+			sourceRect.top = 0;
+			sourceRect.bottom = spriteSize.y;
+			sourceRect.left = spriteIdx.x * spriteSize.x;
+			sourceRect.right = (spriteIdx.x + 1) * spriteSize.x;
 		}
-		sourceRect = rt;
 	}
 };

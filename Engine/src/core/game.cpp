@@ -18,11 +18,10 @@ void Game::Update(float deltaTime, InputData* inputData) {
 	//Check if we are chanign level. Instead of returning we should have a state machine
 	if (inputData->button4 > 0) {
 		m_test.textureKey = 4;
-		m_test.sourceRect = new RECT();
-		m_test.sourceRect->bottom = 600;
-		m_test.sourceRect->right = 800;
-		m_test.sourceRect->top = 0;
-		m_test.sourceRect->left = 0;
+		m_test.sourceRect.bottom = 600;
+		m_test.sourceRect.right = 800;
+		m_test.sourceRect.top = 0;
+		m_test.sourceRect.left = 0;
 		m_test.spriteIdx = DirectX::XMFLOAT2(0, 0);
 		m_test.origion = DirectX::XMFLOAT2(0, 0);
 		m_test.position = DirectX::XMFLOAT2(0, 0);
@@ -147,6 +146,7 @@ void Game::CreateLobbyLevel() {
 
 }
 void Game::CreateTileInfo() {
+	currLevelData.tiles.clear();
 	currLevelData.tiles.resize(currLevelData.width * currLevelData.height);
 	for (size_t x = 0; x < currLevelData.width; x++)
 	{
@@ -161,11 +161,10 @@ void Game::CreateTileInfo() {
 			if (tileType == 1) {
 				SpriteInfo si;
 				si.textureKey = 1;
-				si.sourceRect = new RECT();
-				si.sourceRect->bottom = 64;
-				si.sourceRect->right = 64;
-				si.sourceRect->top = 0;
-				si.sourceRect->left = 0;
+				si.sourceRect.bottom = 64;
+				si.sourceRect.right = 64;
+				si.sourceRect.top = 0;
+				si.sourceRect.left = 0;
 				si.spriteIdx = DirectX::XMFLOAT2(0, 0);
 				si.origion = DirectX::XMFLOAT2(0, 0);
 				si.systemPosition = DirectX::XMFLOAT2(ti.x, ti.y);
@@ -176,11 +175,10 @@ void Game::CreateTileInfo() {
 			else if (tileType == 2) {
 				SpriteInfo si;
 				si.textureKey = 2;
-				si.sourceRect = new RECT();
-				si.sourceRect->bottom = 128;
-				si.sourceRect->right = 64;
-				si.sourceRect->top = 0;
-				si.sourceRect->left = 0;
+				si.sourceRect.bottom = 128;
+				si.sourceRect.right = 64;
+				si.sourceRect.top = 0;
+				si.sourceRect.left = 0;
 				si.spriteIdx = DirectX::XMFLOAT2(0, 0);
 				si.origion = DirectX::XMFLOAT2(0, 64 + 32);
 				si.systemPosition = DirectX::XMFLOAT2(ti.x, ti.y);

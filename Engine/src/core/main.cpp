@@ -105,7 +105,7 @@ int CALLBACK WinMain(HINSTANCE appInstance, HINSTANCE prevInstance, LPSTR cmdLin
 						texture = textureMap[currSprite->textureKey].Get();
 						lastTextureKey = currSprite->textureKey;
 					}
-					m_spriteBatch->Draw(texture, currSprite->position, currSprite->sourceRect, Colors::White, currSprite->rotation, currSprite->origion, currSprite->scale, DirectX::SpriteEffects_None, 0.0f);
+					m_spriteBatch->Draw(texture, currSprite->position, &currSprite->sourceRect, Colors::White, currSprite->rotation, currSprite->origion, currSprite->scale, DirectX::SpriteEffects_None, 0.0f);
 				}
 			}
 			
