@@ -10,6 +10,7 @@ public:
 	LevelGenerator(int seed);
 	~LevelGenerator();
 	std::vector<int> Generate();
+	std::vector<int> GenerateLobby();
 	void print();
 	int m_width, m_height;
 	int startx, starty;
@@ -36,10 +37,12 @@ private:
 	int getTile(int x, int y);
 
 	void PlaceRoom(LevelGeneratorRoom room);
+	void PlaceRoomInvisWalls(LevelGeneratorRoom room);
 	void PlaceCorr(LevelGeneratorRoom room);
 	std::vector<int> GenerateDungeonSpread();
 	std::vector<int> GenerateDungeonTouching();
 	std::vector<int> GenerateDungeonRandomWalk();
+
 
 	LevelGeneratorRoom GenerateRoom(int x, int y);
 	LevelGeneratorRoom GenerateRoom();

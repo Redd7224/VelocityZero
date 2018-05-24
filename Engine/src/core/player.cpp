@@ -10,7 +10,7 @@ Player::Player() {
 	spriteInfo.spriteIdx.x = 0;
 	spriteInfo.origion = DirectX::XMFLOAT2(0, 64);
 	spriteInfo.isHoizontalSheet = true;
-	collider = Collider(DirectX::BoundingSphere(DirectX::XMFLOAT3(systemPosition.x, systemPosition.y, 0), 16));
+	collider = Collider(DirectX::BoundingSphere(DirectX::XMFLOAT3(systemPosition.x, systemPosition.y, 0), 15));
 	
 }
 

@@ -2,7 +2,7 @@
 #include <vector>
 #include <array>
 #include <DirectXMath.h>
-
+#include <time.h>
 #include "spriteInfo.h"
 #include "camera.h"
 #include "inputData.h"
@@ -26,6 +26,8 @@ public:
 
 private:
 	void GenerateDummyLevel();
+	void CreateLobbyLevel();
+	void CreateTileInfo();
 	void DrawSurroundingLevelData();
 	void playerCollision();
 

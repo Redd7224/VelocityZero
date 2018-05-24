@@ -3,12 +3,34 @@
 Game::Game(DirectX::XMFLOAT2 targetResolution) {
 	m_pCamera = new Camera(targetResolution);
 	m_pPlayer = new Player();
-	GenerateDummyLevel();
+	CreateLobbyLevel();
+	srand(time(NULL));
 }
 Game::~Game() {}
 
 void Game::Update(float deltaTime, InputData* inputData) {
-	
+	//Rset values
+	for (size_t i = 0; i < SPRITELAYERSCOUNT; i++)
+	{
+		spritesToDrawLayers[i].drawCount = 0;
+	}
+
+	//Check if we are chanign level. Instead of returning we should have a state machine
+	if (inputData->button4 > 0) {
+		m_test.textureKey = 4;
+		m_test.sourceRect = new RECT();
+		m_test.sourceRect->bottom = 600;
+		m_test.sourceRect->right = 800;
+		m_test.sourceRect->top = 0;
+		m_test.sourceRect->left = 0;
+		m_test.spriteIdx = DirectX::XMFLOAT2(0, 0);
+		m_test.origion = DirectX::XMFLOAT2(0, 0);
+		m_test.position = DirectX::XMFLOAT2(0, 0);
+		m_pCamera->DrawSpriteNoMod(m_test, spritesToDrawLayers[1].spritesToDraw, spritesToDrawLayers[1].drawCount);
+		GenerateDummyLevel();
+		return;
+	}
+
 	//Previous position and colission here is just a test
 	prevPos = m_pPlayer->systemPosition;
 	playerTile.x = (int)m_pPlayer->systemPosition.x / 32;
@@ -22,12 +44,7 @@ void Game::Update(float deltaTime, InputData* inputData) {
 	m_pCamera->FollowCentered(m_pPlayer->spriteInfo.position);
 
 
-	//DRAW THINGS. Reset draw count before hand.
-	for (size_t i = 0; i < SPRITELAYERSCOUNT; i++)
-	{
-		spritesToDrawLayers[i].drawCount = 0;
-	}
-
+	//DRAW THINGS.
 	DrawSurroundingLevelData();
 
 }
@@ -112,11 +129,24 @@ void Game::DrawSurroundingLevelData() {
 
 }
 void Game::GenerateDummyLevel() {
-	LevelGenerator lg(12764183);
+	LevelGenerator lg(rand() % 99999999);
 	currLevelData.rawTiles = lg.Generate();
+	//currLevelData.rawTiles = lg.GenerateLobby();
 	m_pPlayer->systemPosition = DirectX::XMFLOAT2(lg.startx * 32, lg.starty * 32);
 	currLevelData.width = lg.m_width;
 	currLevelData.height = lg.m_height;
+	CreateTileInfo();
+}
+void Game::CreateLobbyLevel() {
+	LevelGenerator lg(rand() % 99999999);
+	currLevelData.rawTiles = lg.GenerateLobby();
+	m_pPlayer->systemPosition = DirectX::XMFLOAT2(lg.startx * 32, lg.starty * 32);
+	currLevelData.width = lg.m_width;
+	currLevelData.height = lg.m_height;
+	CreateTileInfo();
+
+}
+void Game::CreateTileInfo() {
 	currLevelData.tiles.resize(currLevelData.width * currLevelData.height);
 	for (size_t x = 0; x < currLevelData.width; x++)
 	{
@@ -143,7 +173,7 @@ void Game::GenerateDummyLevel() {
 				si.position = DirectX::XMFLOAT2(isox, isoy);
 				ti.tileGameObjectsByLayer[0] = GameObject(si);
 			}
-			else {
+			else if (tileType == 2) {
 				SpriteInfo si;
 				si.textureKey = 2;
 				si.sourceRect = new RECT();
@@ -156,6 +186,11 @@ void Game::GenerateDummyLevel() {
 				si.systemPosition = DirectX::XMFLOAT2(ti.x, ti.y);
 				si.isoPosition = DirectX::XMFLOAT2(isox, isoy);
 				si.position = DirectX::XMFLOAT2(isox, isoy);
+				ti.tileGameObjectsByLayer[1] = GameObject(si, Collider(DirectX::BoundingBox(DirectX::XMFLOAT3(ti.x + 32, ti.y + 32, 0), DirectX::XMFLOAT3(16.0f, 16.0f, 0))));
+
+			}
+			else {
+				SpriteInfo si;
 				ti.tileGameObjectsByLayer[1] = GameObject(si, Collider(DirectX::BoundingBox(DirectX::XMFLOAT3(ti.x + 32, ti.y + 32, 0), DirectX::XMFLOAT3(16.0f, 16.0f, 0))));
 			}
 			currLevelData.tiles[x + y * currLevelData.width] = ti;

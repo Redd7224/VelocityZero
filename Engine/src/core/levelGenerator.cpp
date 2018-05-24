@@ -51,8 +51,6 @@ void LevelGenerator::CreateSeeds() {
 }
 
 std::vector<int> LevelGenerator::Generate() {
-
-
 	int x = randomInt(MinWidth, MaxWidth);
 	int y = randomInt(MinHeight, MaxHeight);
 	if (x > MaxWidth) {
@@ -76,6 +74,24 @@ std::vector<int> LevelGenerator::Generate() {
 
 	return m_CurrentDungeon;
 
+}
+
+std::vector<int> LevelGenerator::GenerateLobby() {
+	m_width = 100;
+	m_height = 100;
+	m_CurrentDungeon.resize(m_width*m_height, Unused);
+	startx = 50;
+	starty = 50;
+	LevelGeneratorRoom lobby;
+	lobby.width = 10;
+	lobby.height = 10;
+	lobby.x = startx - (lobby.width/2);
+	lobby.y = starty - (lobby.height/2);
+
+	PlaceRoomInvisWalls(lobby);
+
+
+	return m_CurrentDungeon;
 }
 
 std::vector<int> LevelGenerator::GenerateDungeonRandomWalk() {
@@ -506,6 +522,29 @@ void LevelGenerator::PlaceRoom(LevelGeneratorRoom room) {
 			if (x == room.x - 1 || y == room.y - 1 || x == room.x + room.width || y == room.y + room.height) {
 				setTile(x, y, Wall);
 				
+			}
+			else {
+				setTile(x, y, Floor);
+			}
+		}
+}
+
+void LevelGenerator::PlaceRoomInvisWalls(LevelGeneratorRoom room) {
+	if (room.x < 1 || room.y < 1 || room.x + room.width > m_width - 1 || room.y + room.height > m_height - 1)
+		return;
+
+	for (int y = room.y; y < room.y + room.height; ++y)
+		for (int x = room.x; x < room.x + room.width; ++x)
+		{
+			if (getTile(x, y) != Unused)
+				return; // the area already used
+		}
+
+	for (int y = room.y - 1; y < room.y + room.height + 1; ++y)
+		for (int x = room.x - 1; x < room.x + room.width + 1; ++x)
+		{
+			if (x == room.x - 1 || y == room.y - 1 || x == room.x + room.width || y == room.y + room.height) {
+				setTile(x, y, InvisWall);
 			}
 			else {
 				setTile(x, y, Floor);
