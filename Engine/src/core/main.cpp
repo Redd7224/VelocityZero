@@ -25,7 +25,16 @@ std::unique_ptr<DirectX::Keyboard> m_keyboard;
 //std::unique_ptr<DirectX::Mouse> m_mouse;
 
 int CALLBACK WinMain(HINSTANCE appInstance, HINSTANCE prevInstance, LPSTR cmdLine, int cmdCount) {
-	Window window(800, 600);
+	int width = 800;
+	int height = 600;
+	//int width = 1280;
+	//int height = 720;
+	//int width = 1920;
+	//int height = 1080;
+ 
+
+	Window window(width, height);
+
 	Renderer renderer(window);
 	MSG msg = { 0 }; //Window Message
 	// TODO Create init function
@@ -54,7 +63,7 @@ int CALLBACK WinMain(HINSTANCE appInstance, HINSTANCE prevInstance, LPSTR cmdLin
 	textureMap[3] = texture;
 	CreateWICTextureFromFile(renderer.getDevice(), L"./art/LoadingScreen.png", nullptr, texture.ReleaseAndGetAddressOf());
 	textureMap[4] = texture;
-	Game game = Game(XMFLOAT2(800,600));
+	Game game = Game(XMFLOAT2(width, height));
 	
 	int x = 0;
 	int y = 0;

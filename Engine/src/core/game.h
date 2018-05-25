@@ -41,4 +41,5 @@ private:
 	Camera* m_pCamera;
 	LevelData currLevelData;
 	const int chunksSize = 32;
+	DirectX::XMFLOAT2 m_targetResolution;
 };

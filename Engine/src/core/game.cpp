@@ -1,6 +1,7 @@
 #include "game.h"
 
 Game::Game(DirectX::XMFLOAT2 targetResolution) {
+	m_targetResolution = targetResolution;
 	m_pCamera = new Camera(targetResolution);
 	m_pPlayer = new Player();
 	CreateLobbyLevel();
@@ -45,7 +46,6 @@ void Game::Update(float deltaTime, InputData* inputData) {
 
 	//DRAW THINGS.
 	DrawSurroundingLevelData();
-
 }
 
 void Game::playerCollision() {
@@ -89,16 +89,18 @@ void Game::DrawSurroundingLevelData() {
 	//Tiles are 64x64 so they are 32 apart from each other. 32 to the left + 32 to the right = 64
 	//Do better math here figure out how many tiles are shown based on screen resolution or have the camera figure that out
 	//Need to make a clamp function	
-	int startx = playerTile.x - 20;
-	int endx = playerTile.x + 20;
+	int tileRangex = m_targetResolution.y / 32;
+	int tileRangey = m_targetResolution.x / 32;
+	int startx = playerTile.x - tileRangex;
+	int endx = playerTile.x + tileRangex;
 	if (startx < 0) {
 		startx = 0;
 	}
 	if (endx > currLevelData.width) {
 		endx = currLevelData.width;
 	}
-	int starty = playerTile.y - 20;
-	int endy = playerTile.y + 20;
+	int starty = playerTile.y - tileRangey;
+	int endy = playerTile.y + tileRangey;
 	if (starty < 0) {
 		starty = 0;
 	}

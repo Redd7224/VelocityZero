@@ -95,10 +95,18 @@ std::vector<int> LevelGenerator::GenerateLobby() {
 }
 
 std::vector<int> LevelGenerator::GenerateDungeonRandomWalk() {
-	curr_x = randomInt(10, m_width);
-	curr_y = randomInt(10, m_height);
+	curr_x = randomInt(20, m_width);
+	curr_y = randomInt(20, m_height);
 	startx = curr_x;
 	starty = curr_y;
+	for (size_t i = -3; i < 3; i++)
+	{
+		for (size_t j = -3; j < 3; j++)
+		{
+			setTile(startx + i, starty + j, Floor);
+		}
+	}
+	
 	int maxFloorTileCount = randomInt((m_width * m_height * .3), (m_width * m_height * .7));
 	int floorTileCount = 0;
 	while (floorTileCount < maxFloorTileCount) {
@@ -140,16 +148,16 @@ std::vector<int> LevelGenerator::GenerateDungeonRandomWalk() {
 		default:
 			break;
 		}
-		if (curr_x <= 0) {
+		if (curr_x <= 1) {
 			curr_x++;
 		}
-		else if (curr_x >= m_width) {
+		else if (curr_x >= m_width-1) {
 			curr_x--;
 		}
-		if (curr_y <= 0) {
+		if (curr_y <= 1) {
 			curr_y++;
 		}
-		else if (curr_y >= m_height) {
+		else if (curr_y >= m_height-1) {
 			curr_y--;
 		}
 
