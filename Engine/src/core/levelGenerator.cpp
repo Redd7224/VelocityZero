@@ -83,8 +83,8 @@ std::vector<int> LevelGenerator::GenerateLobby() {
 	startx = 50;
 	starty = 50;
 	LevelGeneratorRoom lobby;
-	lobby.width = 10;
-	lobby.height = 10;
+	lobby.width = 8;
+	lobby.height = 8;
 	lobby.x = startx - (lobby.width/2);
 	lobby.y = starty - (lobby.height/2);
 

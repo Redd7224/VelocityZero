@@ -4,7 +4,7 @@
 Camera::Camera(DirectX::XMFLOAT2 targetResolution) {
 	m_targetResolution = targetResolution;
 	m_viewport = DirectX::XMFLOAT4(0, 0, targetResolution.x, targetResolution.y);
-	m_buffer = DirectX::XMFLOAT2(targetResolution.x * .1, targetResolution.y * .1);
+	m_buffer = DirectX::XMFLOAT2(targetResolution.x * .2, targetResolution.y * .2);
 }
 Camera::~Camera() {}
 

@@ -31,11 +31,16 @@ int CALLBACK WinMain(HINSTANCE appInstance, HINSTANCE prevInstance, LPSTR cmdLin
 	//int height = 720;
 	//int width = 1920;
 	//int height = 1080;
- 
+	//int width = 2560;
+	//int height = 1440;
+	//int width = 3000;
+	//int height = 2000;
 
+
+	//Window window(1920, 1080);
 	Window window(width, height);
 
-	Renderer renderer(window);
+	Renderer renderer(window, XMFLOAT2(width,height));
 	MSG msg = { 0 }; //Window Message
 	// TODO Create init function
 	m_keyboard = std::make_unique<Keyboard>();
@@ -55,7 +60,7 @@ int CALLBACK WinMain(HINSTANCE appInstance, HINSTANCE prevInstance, LPSTR cmdLin
 	// TODO add method to create textures?
 	ComPtr<ID3D11ShaderResourceView> texture;
 	
-	CreateWICTextureFromFile(renderer.getDevice(), L"./art/PH_ground.png", nullptr, texture.ReleaseAndGetAddressOf());
+	CreateWICTextureFromFile(renderer.getDevice() , L"./art/PH_ground.png", nullptr, texture.ReleaseAndGetAddressOf());
 	textureMap[1] = texture;
 	CreateWICTextureFromFile(renderer.getDevice(), L"./art/PH_wall.png", nullptr, texture.ReleaseAndGetAddressOf());
 	textureMap[2] = texture;
@@ -63,7 +68,9 @@ int CALLBACK WinMain(HINSTANCE appInstance, HINSTANCE prevInstance, LPSTR cmdLin
 	textureMap[3] = texture;
 	CreateWICTextureFromFile(renderer.getDevice(), L"./art/LoadingScreen.png", nullptr, texture.ReleaseAndGetAddressOf());
 	textureMap[4] = texture;
-	Game game = Game(XMFLOAT2(width, height));
+	CreateWICTextureFromFile(renderer.getDevice(), L"./art/PH_ground_128_2.png", nullptr, texture.ReleaseAndGetAddressOf());
+	textureMap[5] = texture;
+	Game game = Game(renderer.bufferResolution);
 	
 	int x = 0;
 	int y = 0;
@@ -96,12 +103,6 @@ int CALLBACK WinMain(HINSTANCE appInstance, HINSTANCE prevInstance, LPSTR cmdLin
 		renderer.beginFrame();
 		//User renderer to render things on frame
 		m_spriteBatch->Begin();
-		/*
-		for (auto &spriteInfo : game.m_spritesToDraw) // access by reference to avoid copying
-		{
-			m_spriteBatch->Draw(textureMap[spriteInfo.textureName].Get(), spriteInfo.position, spriteInfo.sourceRect, Colors::White, spriteInfo.rotation, XMFLOAT2(0, 0));
-		}
-		*/
 		int lastTextureKey = 0;
 		ID3D11ShaderResourceView* texture = nullptr;
 		for (size_t i = 0; i < SPRITELAYERSCOUNT; i++)

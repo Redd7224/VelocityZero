@@ -33,8 +33,8 @@ void Game::Update(float deltaTime, InputData* inputData) {
 
 	//Previous position and colission here is just a test
 	prevPos = m_pPlayer->systemPosition;
-	playerTile.x = (int)m_pPlayer->systemPosition.x / 32;
-	playerTile.y = (int)m_pPlayer->systemPosition.y / 32;
+	playerTile.x = (int)m_pPlayer->systemPosition.x / 64;
+	playerTile.y = (int)m_pPlayer->systemPosition.y / 64;
 	m_pPlayer->Move(inputData, deltaTime);
 	playerCollision();
 
@@ -89,8 +89,9 @@ void Game::DrawSurroundingLevelData() {
 	//Tiles are 64x64 so they are 32 apart from each other. 32 to the left + 32 to the right = 64
 	//Do better math here figure out how many tiles are shown based on screen resolution or have the camera figure that out
 	//Need to make a clamp function	
-	int tileRangex = m_targetResolution.y / 32;
-	int tileRangey = m_targetResolution.x / 32;
+	//need to do this once when resultio is set
+	int tileRangex = m_targetResolution.y / (tileSize / 2) ;
+	int tileRangey = m_targetResolution.x / (tileSize / 2) ;
 	int startx = playerTile.x - tileRangex;
 	int endx = playerTile.x + tileRangex;
 	if (startx < 0) {
@@ -133,7 +134,7 @@ void Game::GenerateDummyLevel() {
 	LevelGenerator lg(rand() % 99999999);
 	currLevelData.rawTiles = lg.Generate();
 	//currLevelData.rawTiles = lg.GenerateLobby();
-	m_pPlayer->systemPosition = DirectX::XMFLOAT2(lg.startx * 32, lg.starty * 32);
+	m_pPlayer->systemPosition = DirectX::XMFLOAT2(lg.startx * tileSize/2, lg.starty * tileSize/2);
 	currLevelData.width = lg.m_width;
 	currLevelData.height = lg.m_height;
 	CreateTileInfo();
@@ -141,7 +142,7 @@ void Game::GenerateDummyLevel() {
 void Game::CreateLobbyLevel() {
 	LevelGenerator lg(rand() % 99999999);
 	currLevelData.rawTiles = lg.GenerateLobby();
-	m_pPlayer->systemPosition = DirectX::XMFLOAT2(lg.startx * 32, lg.starty * 32);
+	m_pPlayer->systemPosition = DirectX::XMFLOAT2(lg.startx * tileSize/2, lg.starty * tileSize/2);
 	currLevelData.width = lg.m_width;
 	currLevelData.height = lg.m_height;
 	CreateTileInfo();
@@ -155,16 +156,16 @@ void Game::CreateTileInfo() {
 		for (size_t y = 0; y < currLevelData.height; y++)
 		{
 			TileInfo ti;
-			ti.x = x * 32;
-			ti.y = y * 32;
+			ti.x = x * tileSize/2;
+			ti.y = y * tileSize/2;
 			float isox = ti.x - ti.y;
 			float isoy = (ti.x + ti.y) / 2;
 			int tileType = currLevelData.rawTiles[x + y * currLevelData.width];
 			if (tileType == 1) {
 				SpriteInfo si;
-				si.textureKey = 1;
-				si.sourceRect.bottom = 64;
-				si.sourceRect.right = 64;
+				si.textureKey = 5;
+				si.sourceRect.bottom = tileSize;
+				si.sourceRect.right = tileSize;
 				si.sourceRect.top = 0;
 				si.sourceRect.left = 0;
 				si.spriteIdx = DirectX::XMFLOAT2(0, 0);
@@ -191,7 +192,7 @@ void Game::CreateTileInfo() {
 			}
 			else {
 				SpriteInfo si;
-				ti.tileGameObjectsByLayer[1] = GameObject(si, Collider(DirectX::BoundingBox(DirectX::XMFLOAT3(ti.x + 32, ti.y + 32, 0), DirectX::XMFLOAT3(16.0f, 16.0f, 0))));
+				ti.tileGameObjectsByLayer[1] = GameObject(si, Collider(DirectX::BoundingBox(DirectX::XMFLOAT3(ti.x + 64, ti.y + 32, 0), DirectX::XMFLOAT3(32.0f, 32.0f, 0))));
 			}
 			currLevelData.tiles[x + y * currLevelData.width] = ti;
 		}

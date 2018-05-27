@@ -1,10 +1,10 @@
 #include "renderer.h"
 
 
-Renderer::Renderer(Window& window) {
+Renderer::Renderer(Window& window, DirectX::XMFLOAT2 resolution) {
+	setBufferResolution(resolution);
 	createDevice(window);
 	createRenderTarget();
-
 }
 
 void Renderer::createDevice(Window& window) {
@@ -13,6 +13,9 @@ void Renderer::createDevice(Window& window) {
 	swapChainDesc.BufferCount = 1; // 0 and 1
 	swapChainDesc.BufferDesc.Format = DXGI_FORMAT_B8G8R8A8_UNORM; //32 bit format for colors
 	swapChainDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
+	swapChainDesc.BufferDesc.Scaling = DXGI_MODE_SCALING_STRETCHED;
+	swapChainDesc.BufferDesc.Width = bufferResolution.x;
+	swapChainDesc.BufferDesc.Height = bufferResolution.y;
 	swapChainDesc.OutputWindow = window.getHandle();
 	swapChainDesc.SampleDesc.Count = 1;
 	swapChainDesc.Windowed = true; // TODO make this configurable
@@ -69,4 +72,23 @@ ID3D11DeviceContext* Renderer::getDeviceContext() {
 	return m_pDeviceContext;
 }
 
+void Renderer::setBufferResolution(DirectX::XMFLOAT2 resolution) {
+	float ratio = resolution.x / (float)resolution.y;
+	if (ratio == 16 / (float)9) {
+		bufferResolution = m_default_buffer_169;
+	}
+	else if (ratio == 16 / (float)10) {
+		bufferResolution = m_default_buffer_1610;
+	}
+	else if (ratio == 4 / (float)3) {
+		bufferResolution = m_default_buffer_43;
+	}
+	else if (ratio == 3 / (float)2) {
+		bufferResolution = m_default_buffer_32;
+	}
+	else {
+		bufferResolution.x = resolution.x;
+		bufferResolution.y = resolution.y;
+	}
 
+}

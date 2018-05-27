@@ -42,4 +42,7 @@ private:
 	LevelData currLevelData;
 	const int chunksSize = 32;
 	DirectX::XMFLOAT2 m_targetResolution;
+	
+	const int tileSize = 128;
+
 };
