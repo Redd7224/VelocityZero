@@ -147,6 +147,25 @@ void Game::CreateLobbyLevel() {
 	currLevelData.height = lg.m_height;
 	CreateTileInfo();
 
+	//Hardcoded doodad to test
+	int x = lg.startx * tileSize / 2;
+	int y = (lg.starty - 4) * tileSize / 2;
+	float isox = x - y;
+	float isoy = (x + y) / 2;
+	SpriteInfo si;
+	si.textureKey = 6;
+	si.sourceRect.bottom = 128;
+	si.sourceRect.right = 256;
+	si.sourceRect.top = 0;
+	si.sourceRect.left = 0;
+	si.spriteIdx = DirectX::XMFLOAT2(0, 0);
+	si.origion = DirectX::XMFLOAT2(128, 64);
+	si.systemPosition = DirectX::XMFLOAT2(x, y);
+	si.isoPosition = DirectX::XMFLOAT2(isox, isoy);
+	si.position = DirectX::XMFLOAT2(isox, isoy);
+	currLevelData.tiles[lg.startx + (lg.starty - 4) * currLevelData.width].tileGameObjectsByLayer[1] = GameObject(si, Collider(DirectX::BoundingBox(DirectX::XMFLOAT3(x + 32, y + 64 , 0), DirectX::XMFLOAT3(64.0f, 16.0f, 0))));
+
+
 }
 void Game::CreateTileInfo() {
 	currLevelData.tiles.clear();

@@ -70,6 +70,8 @@ int CALLBACK WinMain(HINSTANCE appInstance, HINSTANCE prevInstance, LPSTR cmdLin
 	textureMap[4] = texture;
 	CreateWICTextureFromFile(renderer.getDevice(), L"./art/PH_ground_128_2.png", nullptr, texture.ReleaseAndGetAddressOf());
 	textureMap[5] = texture;
+	CreateWICTextureFromFile(renderer.getDevice(), L"./art/PH_Shop.png", nullptr, texture.ReleaseAndGetAddressOf());
+	textureMap[6] = texture;
 	Game game = Game(renderer.bufferResolution);
 	
 	int x = 0;
