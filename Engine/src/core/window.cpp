@@ -57,20 +57,21 @@ Window::Window(int width, int height){
 	RegisterClass(&wc); //Register the Class so it can be found by Create Window
 
 
-	//Figure out client size adjuestmnet. AdjustWindowRect needs to be configurbale true = title bar
-	//RECT windowRect;
-	//SetRect(&windowRect, 0, 0, width, height);
-	//AdjustWindowRect(&windowRect, WS_POPUP  | WS_CAPTION | WS_SYSMENU | WS_VISIBLE, true);
+	//Figure out client size adjuestmnet. need to have this smart enough for full screen as well?
+	RECT windowRect;
+	SetRect(&windowRect, 0, 0, width, height);
+	AdjustWindowRect(&windowRect, WS_POPUP | WS_CAPTION | WS_SYSMENU | WS_VISIBLE, false);
 
 
 	//Creates Window
 	m_handle = CreateWindow("VelocityZero", //Name of Window Style class. Using Custom class
 		"Velocity Zero", //Window title
-		WS_POPUP | WS_VISIBLE, //Window Styles. WS_POPUP = window mode? WS_CAPTION = title bar; WS_SYSMENU = close button? 
-		100, 100, width,height, //Default position and size //windowRect.right - windowRect.left, windowRect.bottom - windowRect.top
+		WS_POPUP | WS_CAPTION | WS_SYSMENU | WS_VISIBLE, //Window Styles. WS_POPUP = window mode? WS_CAPTION = title bar; WS_SYSMENU = close button? 
+		100, 100, windowRect.right - windowRect.left, windowRect.bottom - windowRect.top, //Default position and size //windowRect.right - windowRect.left, windowRect.bottom - windowRect.top // width, height
 		nullptr, nullptr, nullptr, nullptr);
-
-
+	RECT clientRect;
+	GetClientRect(m_handle, &clientRect);
+	int x = 1;
 }
 
 HWND Window::getHandle()
