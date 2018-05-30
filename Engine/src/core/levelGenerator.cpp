@@ -95,8 +95,8 @@ std::vector<int> LevelGenerator::GenerateLobby() {
 }
 
 std::vector<int> LevelGenerator::GenerateDungeonRandomWalk() {
-	curr_x = randomInt(20, m_width);
-	curr_y = randomInt(20, m_height);
+	curr_x = randomInt(20, m_width-10);
+	curr_y = randomInt(20, m_height-10);
 	startx = curr_x;
 	starty = curr_y;
 	for (size_t i = -3; i < 3; i++)

@@ -64,7 +64,7 @@ int CALLBACK WinMain(HINSTANCE appInstance, HINSTANCE prevInstance, LPSTR cmdLin
 	textureMap[1] = texture;
 	CreateWICTextureFromFile(renderer.getDevice(), L"./art/PH_wall.png", nullptr, texture.ReleaseAndGetAddressOf());
 	textureMap[2] = texture;
-	CreateWICTextureFromFile(renderer.getDevice(), L"./art/perspectiveTest1.png", nullptr, texture.ReleaseAndGetAddressOf());
+	CreateWICTextureFromFile(renderer.getDevice(), L"./art/0001-sheet.png", nullptr, texture.ReleaseAndGetAddressOf());
 	textureMap[3] = texture;
 	CreateWICTextureFromFile(renderer.getDevice(), L"./art/LoadingScreen.png", nullptr, texture.ReleaseAndGetAddressOf());
 	textureMap[4] = texture;
