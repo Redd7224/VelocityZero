@@ -21,13 +21,14 @@ void Player::Move(InputData* inputData, float deltaTime) {
 	int yDiagMod = 1;
 	float isoX = 0;
 	float isoY = 0;
+
 	//Total hack? Maybe should be done somewhere else 
 	//Bitmask for 8 directions
 	// 1 = up
 	// 2 = down
 	// 4 = left 
 	// 8 = right
-	int direction = 0;
+	direction = 0;
 	if (inputData->yAxis != 0) {
 		if (inputData->yAxis > 0) {
 			direction += 1;
@@ -98,11 +99,6 @@ void Player::Move(InputData* inputData, float deltaTime) {
 	}
 
 	spriteInfo.CalcSourceRECT();
-
-
-		
-
-
 
 	bool isometricDisplay = true;
 	if (isometricDisplay) {

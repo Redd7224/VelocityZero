@@ -31,18 +31,65 @@ void Game::Update(float deltaTime, InputData* inputData) {
 		return;
 	}
 
-	//Previous position and colission here is just a test
 	prevPos = m_pPlayer->systemPosition;
 	playerTile.x = (int)m_pPlayer->systemPosition.x / 64;
 	playerTile.y = (int)m_pPlayer->systemPosition.y / 64;
+
+	if (inputData->button1 > 0) {
+		
+		Collider* collider = new Collider(DirectX::BoundingBox());
+		DirectX::XMFLOAT2 playerCollider = m_pPlayer->systemPosition;
+		collider->boxCollider.Extents = DirectX::XMFLOAT3(32, 32, 0);
+
+		switch (m_pPlayer->direction)
+		{
+		case 1:
+			playerCollider.x += 1;
+			playerCollider.y += 1;
+			break;
+		case 2:
+			playerCollider.x += -1;
+			playerCollider.y += -1;
+			break;
+		case 4:
+			playerCollider.x += 1;
+			playerCollider.y += -1;
+			break;
+		case 5:
+			playerCollider.x += 1;
+			playerCollider.y += 0;
+			break;
+		case 6:
+			playerCollider.x += 0;
+			playerCollider.y += -1;
+			break;
+		case 8:
+			playerCollider.x += -1;
+			playerCollider.y += 1;
+			break;
+		case 9:
+			playerCollider.x += 0;
+			playerCollider.y += 1;
+			break;
+		case 10:
+			playerCollider.x += -1;
+			playerCollider.y += 0;
+			break;
+		default:
+			break;
+		}
+
+		collider->boxCollider.Center = DirectX::XMFLOAT3(playerCollider.x, playerCollider.y, 0);
+
+		attackCollision(collider);
+	}
+
+	//Previous position and colission here is just a test
 	m_pPlayer->Move(inputData, deltaTime);
 	playerCollision();
 
-
-
 	//m_pCamera->FollowCentered(m_pPlayer->m_SpriteInfo.position);
 	m_pCamera->FollowCentered(m_pPlayer->spriteInfo.position);
-
 
 	//DRAW THINGS.
 	DrawSurroundingLevelData();
@@ -77,6 +124,43 @@ void Game::playerCollision() {
 			TileInfo *ti = &currLevelData.tiles[x + y * currLevelData.width];
 			if (m_pPlayer->collider.Intersects(ti->tileGameObjectsByLayer[1].collider)) {
 				m_pPlayer->systemPosition = prevPos;
+			}
+		}
+	}
+
+	//somthing somethin playerChunk.y
+
+}
+
+void Game::attackCollision(Collider* collider){
+
+	//Tiles are 64x64 so they are 32 apart from each other. 32 to the left + 32 to the right = 64
+	//Figure out where the player is in tile position
+	int startx = playerTile.x - 2;
+	int endx = playerTile.x + 2;
+	if (startx < 0) {
+		startx = 0;
+	}
+	if (endx > currLevelData.width) {
+		endx = currLevelData.width;
+	}
+	int starty = playerTile.y - 2;
+	int endy = playerTile.y + 2;
+	if (starty < 0) {
+		starty = 0;
+	}
+	if (endy > currLevelData.height) {
+		endy = currLevelData.height;
+	}
+
+	//TODO getsize call was slow. This needs to be a const var
+	for (size_t y = starty; y < endy; y++)
+	{
+		for (size_t x = startx; x < endx; x++)
+		{
+			TileInfo *ti = &currLevelData.tiles[x + y * currLevelData.width];
+			if (collider->Intersects(ti->tileGameObjectsByLayer[1].collider)) {
+				char a = 'a';
 			}
 		}
 	}
@@ -163,7 +247,9 @@ void Game::CreateLobbyLevel() {
 	si.systemPosition = DirectX::XMFLOAT2(x, y);
 	si.isoPosition = DirectX::XMFLOAT2(isox, isoy);
 	si.position = DirectX::XMFLOAT2(isox, isoy);
-	currLevelData.tiles[lg.startx + (lg.starty - 4) * currLevelData.width].tileGameObjectsByLayer[1] = GameObject(si, Collider(DirectX::BoundingBox(DirectX::XMFLOAT3(x + 32, y + 64 , 0), DirectX::XMFLOAT3(64.0f, 16.0f, 0))));
+	currLevelData.tiles[lg.startx + (lg.starty - 4) * currLevelData.width].tileGameObjectsByLayer[1] = GameObject(si, 
+		Collider(DirectX::BoundingBox(DirectX::XMFLOAT3(x + 32, y + 64 , 0), DirectX::XMFLOAT3(64.0f, 16.0f, 0)))
+	);
 
 
 }

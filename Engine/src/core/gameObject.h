@@ -12,6 +12,7 @@ public:
 	~GameObject();
 
 	SpriteInfo spriteInfo;
+	int direction;
 	DirectX::XMFLOAT2 systemPosition;
 	DirectX::XMFLOAT2 isoPosition;
 

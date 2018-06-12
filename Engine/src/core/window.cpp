@@ -12,12 +12,12 @@ LRESULT CALLBACK WinProc(HWND handle, UINT msg, WPARAM wparam, LPARAM lparam) {
 			PostQuitMessage(0);  // Windows handler to Quit application?
 			return 0;
 			break;
-	
+
 	case WM_ACTIVATEAPP:
 		DirectX::Keyboard::ProcessMessage(msg, wparam, lparam);
-		//DirectX::Mouse::ProcessMessage(msg, wparam, lparam);
+		DirectX::Mouse::ProcessMessage(msg, wparam, lparam);
 		break;
-/*
+		
 	case WM_INPUT:
 	case WM_MOUSEMOVE:
 	case WM_LBUTTONDOWN:
@@ -32,7 +32,6 @@ LRESULT CALLBACK WinProc(HWND handle, UINT msg, WPARAM wparam, LPARAM lparam) {
 	case WM_MOUSEHOVER:
 		DirectX::Mouse::ProcessMessage(msg, wparam, lparam);
 		break;
-		*/
 	case WM_KEYDOWN:
 	case WM_SYSKEYDOWN:
 	case WM_KEYUP:
@@ -71,7 +70,6 @@ Window::Window(int width, int height){
 		nullptr, nullptr, nullptr, nullptr);
 	RECT clientRect;
 	GetClientRect(m_handle, &clientRect);
-	int x = 1;
 }
 
 HWND Window::getHandle()

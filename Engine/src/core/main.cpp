@@ -22,15 +22,15 @@ using namespace DirectX;
 std::map<int, ComPtr<ID3D11ShaderResourceView>> textureMap;
 // keyboard and mouse are singletons. 
 std::unique_ptr<DirectX::Keyboard> m_keyboard;
-//std::unique_ptr<DirectX::Mouse> m_mouse;
+std::unique_ptr<DirectX::Mouse> m_mouse;
 
 int CALLBACK WinMain(HINSTANCE appInstance, HINSTANCE prevInstance, LPSTR cmdLine, int cmdCount) {
-	int width = 800;
-	int height = 600;
+	//int width = 800;
+	//int height = 600;
 	//int width = 1280;
 	//int height = 720;
-	//int width = 1920;
-	//int height = 1080;
+	int width = 1920;
+	int height = 1080;
 	//int width = 2560;
 	//int height = 1440;
 	//int width = 3000;
@@ -44,8 +44,7 @@ int CALLBACK WinMain(HINSTANCE appInstance, HINSTANCE prevInstance, LPSTR cmdLin
 	MSG msg = { 0 }; //Window Message
 	// TODO Create init function
 	m_keyboard = std::make_unique<Keyboard>();
-	//m_mouse = std::make_unique<Mouse>();
-	//m_mouse->SetWindow(window.getHandle());
+	m_mouse = std::make_unique<Mouse>();
 	
 	// DXTOOLKIT
 	std::unique_ptr<DirectX::SpriteBatch> m_spriteBatch = std::make_unique<DirectX::SpriteBatch>(renderer.getDeviceContext());
@@ -55,8 +54,8 @@ int CALLBACK WinMain(HINSTANCE appInstance, HINSTANCE prevInstance, LPSTR cmdLin
 	//TODO decide if we want fixed update or not FIXED FPS
 	s_timer.SetFixedTimeStep(true);
 	s_timer.SetTargetElapsedSeconds(1.f / 60.f);
-	//InputHandler* inputHander = new InputHandler(m_keyboard.get(),m_mouse.get());
-	InputHandler* inputHander = new InputHandler(m_keyboard.get(), nullptr);
+	InputHandler* inputHander = new InputHandler(m_keyboard.get(),m_mouse.get());
+	//InputHandler* inputHander = new InputHandler(m_keyboard.get(), nullptr);
 	// TODO add method to create textures?
 	ComPtr<ID3D11ShaderResourceView> texture;
 	

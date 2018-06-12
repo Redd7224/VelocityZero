@@ -30,6 +30,7 @@ private:
 	void CreateTileInfo();
 	void DrawSurroundingLevelData();
 	void playerCollision();
+	void attackCollision(Collider*);
 
 	Player* m_pPlayer;
 	//used for player col, doesnt belong here

@@ -11,9 +11,12 @@ InputHandler::~InputHandler() {}
 void InputHandler::Update() {
 	m_pInputData->xAxis = 0;
 	m_pInputData->yAxis = 0;
+
+	m_pInputData->button1 = 0;
 	m_pInputData->button4 = 0;
+	
 	auto kb = m_pKeyboard->GetState();
-	//auto ms = m_pMouse->GetState();
+	auto ms = m_pMouse->GetState();
 	if (kb.Escape) {
 		PostQuitMessage(0);
 	}
@@ -31,5 +34,8 @@ void InputHandler::Update() {
 	}
 	if (kb.L) {
 		m_pInputData->button4 = 1;
+	}
+	if (ms.leftButton) {
+		m_pInputData->button1 = 1;
 	}
 }
